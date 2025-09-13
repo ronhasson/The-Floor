@@ -165,7 +165,7 @@ function initClock(total) {
 
 document.getElementById('open-display').addEventListener('click', () => {
   // open audience display in new window
-  window.open('/web/display.html', 'display');
+  window.open('display.html', 'display');
 });
 
 document.getElementById('apply-total').addEventListener('click', () => {
