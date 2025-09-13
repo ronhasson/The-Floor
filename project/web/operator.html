@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Arena Floor Operator</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Arena Floor Operator</h1>
+  <section id="players">
+    <h2>Players</h2>
+    <div id="player-list"></div>
+    <button id="add-player">Add Player</button>
+  </section>
+
+  <section id="duel">
+    <h2>Duel Setup</h2>
+    <div>
+      Left: <select id="left-player"></select>
+      Right: <select id="right-player"></select>
+    </div>
+    <div>
+      Category: <select id="category"></select>
+      Item: <select id="item"></select>
+    </div>
+    <div>
+      Total ms: <input id="total-ms" type="number" step="1000"> <button id="apply-total">Apply</button>
+    </div>
+    <div class="controls">
+      <button id="open-display">Open Display Window</button>
+      <button id="start-duel" class="primary">Start Duel</button>
+      <button id="pause-duel">Pause</button>
+      <button id="switch-left" class="primary">Correct (Left)</button>
+      <button id="switch-right" class="primary">Correct (Right)</button>
+      <button id="reveal">Reveal Answer</button>
+      <button id="timeout">Timeout</button>
+      <button id="win-left" class="primary">Declare Left Winner</button>
+      <button id="win-right" class="primary">Declare Right Winner</button>
+      <button id="next-item">Next Item</button>
+      <button id="reset-duel">Reset Duel</button>
+    </div>
+  </section>
+
+  <section id="storage">
+    <h2>State & Storage</h2>
+    <div>Last saved: <span id="last-saved">never</span></div>
+    <button id="edit-json">Edit JSON</button>
+    <button id="export-state">Export State</button>
+    <input type="file" id="import-file" style="display:none" />
+    <button id="import-state">Import State</button>
+    <button id="reset-show" class="danger">Start New Show (Reset)</button>
+    <h3>Settings</h3>
+    <label>Default total ms <input id="setting-total" type="number" step="1000"></label>
+    <button id="save-settings">Save Settings</button>
+  </section>
+
+  <div id="modal" class="hidden"></div>
+
+  <script type="module" src="app.js"></script>
+  <script type="module" src="operator.js"></script>
+</body>
+</html>

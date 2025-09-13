@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "generatedAt": "2025-09-13T14:33:19.473483Z",
+  "categories": [
+    {
+      "id": "shoe-brands",
+      "name": "Shoe Brands",
+      "items": []
+    },
+    {
+      "id": "transportation",
+      "name": "Transportation",
+      "items": []
+    }
+  ]
+}
