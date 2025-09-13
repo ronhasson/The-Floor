@@ -1,0 +1,19 @@
+body {
+  background: #111;
+  color: #eee;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+button, input, select {
+  font-size: 1rem;
+  margin: 4px;
+}
+.primary { background: #0a84ff; color: #fff; }
+.danger { background: #d00; color: #fff; }
+.clock { display: inline-block; width: 30%; text-align: center; font-size: 2rem; padding: 1rem; }
+.clock.active { border: 2px solid yellow; }
+.item { max-width: 30%; max-height: 50vh; }
+.ready span { font-size: 2rem; margin: 0 1rem; }
+.modal { background:#222; padding:1rem; position:fixed; top:10%; left:10%; right:10%; bottom:10%; }
+.hidden { display:none; }
+.overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; font-size:3rem; }
