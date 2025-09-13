@@ -1,16 +1,54 @@
 {
   "version": 1,
-  "generatedAt": "2025-09-13T14:33:19.473483Z",
+  "generatedAt": "2025-09-13T15:02:05.943802Z",
   "categories": [
     {
       "id": "shoe-brands",
       "name": "Shoe Brands",
-      "items": []
+      "items": [
+        {
+          "id": "shoe-brands-1",
+          "index": 1,
+          "answer": "Nike",
+          "src": "/GameFolder/Shoe Brands/1 - Nike.png"
+        },
+        {
+          "id": "shoe-brands-2",
+          "index": 2,
+          "answer": "Addidas",
+          "src": "/GameFolder/Shoe Brands/2 - Addidas.png"
+        },
+        {
+          "id": "shoe-brands-1",
+          "index": 1,
+          "answer": "image",
+          "src": "/GameFolder/Shoe Brands/image.png"
+        }
+      ]
     },
     {
       "id": "transportation",
       "name": "Transportation",
-      "items": []
+      "items": [
+        {
+          "id": "transportation-1",
+          "index": 1,
+          "answer": "Bike",
+          "src": "/GameFolder/Transportation/1 - Bike.png"
+        },
+        {
+          "id": "transportation-2",
+          "index": 2,
+          "answer": "Bus",
+          "src": "/GameFolder/Transportation/2 - Bus.png"
+        },
+        {
+          "id": "transportation-1",
+          "index": 1,
+          "answer": "3- Car",
+          "src": "/GameFolder/Transportation/3- Car.png"
+        }
+      ]
     }
   ]
 }
