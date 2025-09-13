@@ -15,6 +15,8 @@ import {
 
 let state = loadState();
 let settings = loadSettings();
+let displayWin = null;
+let displayConnected = false;
 
 async function init() {
   if (state) {
@@ -34,6 +36,7 @@ async function init() {
   renderPlayers();
   renderDuelSelectors();
   tickLoop();
+  updateDisplayStatus();
 }
 
 // Player management ----------------------------------------------------
@@ -164,8 +167,13 @@ function initClock(total) {
 }
 
 document.getElementById('open-display').addEventListener('click', () => {
-  // open audience display in new window
-  window.open('display.html', 'display');
+  if (displayWin && !displayWin.closed) {
+    displayWin.focus();
+  } else {
+    displayWin = window.open('display.html', 'display');
+  }
+  displayConnected = true;
+  updateDisplayStatus();
 });
 
 document.getElementById('apply-total').addEventListener('click', () => {
@@ -284,6 +292,27 @@ document.getElementById('next-item').addEventListener('click', nextItem);
 
 document.getElementById('reset-duel').addEventListener('click', resetDuel);
 
+function updateDisplayStatus() {
+  const el = document.getElementById('display-status');
+  const btn = document.getElementById('open-display');
+  if (!el || !btn) return;
+  if (displayConnected && displayWin && !displayWin.closed) {
+    el.textContent = 'Display: Open';
+    btn.textContent = 'Focus Display Window';
+  } else {
+    el.textContent = 'Display: Closed';
+    btn.textContent = 'Open Display Window';
+  }
+}
+
+setInterval(() => {
+  if (displayConnected && displayWin && displayWin.closed) {
+    displayConnected = false;
+    displayWin = null;
+  }
+  updateDisplayStatus();
+}, 1000);
+
 // State & settings -----------------------------------------------------
 
 document.getElementById('edit-json').addEventListener('click', () => {
@@ -368,7 +397,15 @@ function tickLoop() {
 }
 
 channel.onmessage = e => {
-  // operator is source of truth; ignore
+  if (e.data && e.data.__displayEvent === 'opened') {
+    displayConnected = true;
+    updateDisplayStatus();
+  } else if (e.data && e.data.__displayEvent === 'closed') {
+    displayConnected = false;
+    displayWin = null;
+    updateDisplayStatus();
+  }
+  // ignore state updates
 };
 
 init();

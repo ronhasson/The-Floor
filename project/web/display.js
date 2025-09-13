@@ -2,6 +2,10 @@ import { channel, loadManifest } from './app.js';
 
 let state = null;
 let manifest = null;
+channel.postMessage({ __displayEvent: 'opened' });
+window.addEventListener('beforeunload', () => {
+  channel.postMessage({ __displayEvent: 'closed' });
+});
 
 async function init() {
   manifest = await loadManifest();
@@ -24,7 +28,11 @@ function render() {
   } else if (scene === 'duel_live' || scene === 'pause') {
     const left = state.players.find(p=>p.id===state.leftPlayerId)?.name || 'Left';
     const right = state.players.find(p=>p.id===state.rightPlayerId)?.name || 'Right';
-    const img = state.current ? `<img src="${state.current.src}" class="item">` : '';
+    let imgSrc = '';
+    if (state.current?.src) {
+      imgSrc = state.current.src.startsWith('/') ? '..' + state.current.src : state.current.src;
+    }
+    const img = state.current ? `<img src="${imgSrc}" class="item">` : '';
     const ans = state.current?.revealed ? `<div class="answer">${state.current.answer}</div>` : '';
     root.innerHTML = `\n      <div class="clock left ${state.clock.runningSide==='left'?'active':''}">${left}<br>${Math.ceil(state.clock.leftRemainingMs/1000)}</div>\n      ${img}\n      <div class="clock right ${state.clock.runningSide==='right'?'active':''}">${right}<br>${Math.ceil(state.clock.rightRemainingMs/1000)}</div>\n      ${ans}`;
     if (scene === 'pause') {
@@ -47,8 +55,13 @@ function renderPlayers() {
 }
 
 channel.onmessage = e => {
+  if (e.data && e.data.__displayEvent) return;
   state = e.data;
   render();
 };
+
+document.getElementById('open-operator')?.addEventListener('click', () => {
+  window.open('operator.html', 'operator');
+});
 
 init();
