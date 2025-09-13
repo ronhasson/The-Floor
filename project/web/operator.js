@@ -15,6 +15,8 @@ import {
 
 let state = loadState();
 let settings = loadSettings();
+let displayWin = null;
+let displayConnected = false;
 
 async function init() {
   if (state) {
@@ -34,6 +36,7 @@ async function init() {
   renderPlayers();
   renderDuelSelectors();
   tickLoop();
+  updateDisplayStatus();
 }
 
 // Player management ----------------------------------------------------
@@ -150,6 +153,21 @@ document.getElementById('item').addEventListener('change', async e => {
   saveState(state);
 });
 
+async function ensureCurrentItem() {
+  const catId = document.getElementById('category').value;
+  if (!catId) return;
+  const idx = parseInt(document.getElementById('item').value,10) || 1;
+  const manifest = await loadManifest();
+  const cat = manifest.categories.find(c=>c.id===catId);
+  if (!cat) return;
+  const item = cat.items.find(i=>i.index===idx);
+  if (!item) return;
+  state.current = { categoryId: cat.id, itemIndex: item.index, src: item.src, answer: item.answer, revealed:false };
+  const itemSel = document.getElementById('item');
+  if (itemSel) itemSel.value = item.index;
+  state.scene = 'duel_ready';
+}
+
 // Clock and duel control -----------------------------------------------
 function initClock(total) {
   state.clock = {
@@ -164,8 +182,13 @@ function initClock(total) {
 }
 
 document.getElementById('open-display').addEventListener('click', () => {
-  // open audience display in new window
-  window.open('display.html', 'display');
+  if (displayWin && !displayWin.closed) {
+    displayWin.focus();
+  } else {
+    displayWin = window.open('display.html', 'display');
+  }
+  displayConnected = true;
+  updateDisplayStatus();
 });
 
 document.getElementById('apply-total').addEventListener('click', () => {
@@ -176,7 +199,12 @@ document.getElementById('apply-total').addEventListener('click', () => {
   }
 });
 
-function startDuel() {
+async function startDuel() {
+  await ensureCurrentItem();
+  if (!state.current?.src) {
+    alert('Select a category and item before starting the duel.');
+    return;
+  }
   const total = parseInt(document.getElementById('total-ms').value,10) || settings.defaultTotalMs;
   initClock(total);
   saveState(state);
@@ -195,9 +223,29 @@ function pauseToggle() {
   saveState(state);
 }
 
-function switchTurn(side) {
+async function advanceItem() {
+  if (!state.current) return;
+  const manifest = await loadManifest();
+  const cat = manifest.categories.find(c=>c.id===state.current.categoryId);
+  if (!cat) { state.current = undefined; state.scene = 'category_select'; return; }
+  const nextIndex = state.current.itemIndex + 1;
+  const item = cat.items.find(i=>i.index===nextIndex);
+  if (item) {
+    state.current = { categoryId: cat.id, itemIndex: item.index, src: item.src, answer: item.answer, revealed:false };
+    const itemSel = document.getElementById('item');
+    if (itemSel) itemSel.value = item.index;
+  } else {
+    state.current = undefined;
+    state.scene = 'category_select';
+    const itemSel = document.getElementById('item');
+    if (itemSel) itemSel.value = '';
+  }
+}
+
+async function switchTurn(side) {
   if (state.clock.runningSide !== side) return;
   applyElapsed();
+  await advanceItem();
   state.clock.runningSide = side === 'left' ? 'right' : 'left';
   state.clock.lastSwitchTs = Date.now();
   saveState(state);
@@ -284,6 +332,27 @@ document.getElementById('next-item').addEventListener('click', nextItem);
 
 document.getElementById('reset-duel').addEventListener('click', resetDuel);
 
+function updateDisplayStatus() {
+  const el = document.getElementById('display-status');
+  const btn = document.getElementById('open-display');
+  if (!el || !btn) return;
+  if (displayConnected && displayWin && !displayWin.closed) {
+    el.textContent = 'Display: Open';
+    btn.textContent = 'Focus Display Window';
+  } else {
+    el.textContent = 'Display: Closed';
+    btn.textContent = 'Open Display Window';
+  }
+}
+
+setInterval(() => {
+  if (displayConnected && displayWin && displayWin.closed) {
+    displayConnected = false;
+    displayWin = null;
+  }
+  updateDisplayStatus();
+}, 1000);
+
 // State & settings -----------------------------------------------------
 
 document.getElementById('edit-json').addEventListener('click', () => {
@@ -368,7 +437,15 @@ function tickLoop() {
 }
 
 channel.onmessage = e => {
-  // operator is source of truth; ignore
+  if (e.data && e.data.__displayEvent === 'opened') {
+    displayConnected = true;
+    updateDisplayStatus();
+  } else if (e.data && e.data.__displayEvent === 'closed') {
+    displayConnected = false;
+    displayWin = null;
+    updateDisplayStatus();
+  }
+  // ignore state updates
 };
 
 init();
