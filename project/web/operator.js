@@ -201,6 +201,10 @@ document.getElementById('apply-total').addEventListener('click', () => {
 
 async function startDuel() {
   await ensureCurrentItem();
+  if (!state.current?.src) {
+    alert('Select a category and item before starting the duel.');
+    return;
+  }
   const total = parseInt(document.getElementById('total-ms').value,10) || settings.defaultTotalMs;
   initClock(total);
   saveState(state);

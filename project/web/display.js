@@ -31,7 +31,7 @@ function render() {
     let imgSrc = '';
     if (state.current?.src) {
       imgSrc = state.current.src;
-      if (imgSrc.startsWith('/') && window.location.protocol === 'file:') {
+      if (imgSrc.startsWith('/')) {
         imgSrc = '..' + imgSrc;
       }
       imgSrc = encodeURI(imgSrc);
