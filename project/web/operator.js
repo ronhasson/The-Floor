@@ -153,6 +153,21 @@ document.getElementById('item').addEventListener('change', async e => {
   saveState(state);
 });
 
+async function ensureCurrentItem() {
+  const catId = document.getElementById('category').value;
+  if (!catId) return;
+  const idx = parseInt(document.getElementById('item').value,10) || 1;
+  const manifest = await loadManifest();
+  const cat = manifest.categories.find(c=>c.id===catId);
+  if (!cat) return;
+  const item = cat.items.find(i=>i.index===idx);
+  if (!item) return;
+  state.current = { categoryId: cat.id, itemIndex: item.index, src: item.src, answer: item.answer, revealed:false };
+  const itemSel = document.getElementById('item');
+  if (itemSel) itemSel.value = item.index;
+  state.scene = 'duel_ready';
+}
+
 // Clock and duel control -----------------------------------------------
 function initClock(total) {
   state.clock = {
@@ -184,7 +199,8 @@ document.getElementById('apply-total').addEventListener('click', () => {
   }
 });
 
-function startDuel() {
+async function startDuel() {
+  await ensureCurrentItem();
   const total = parseInt(document.getElementById('total-ms').value,10) || settings.defaultTotalMs;
   initClock(total);
   saveState(state);
@@ -203,9 +219,29 @@ function pauseToggle() {
   saveState(state);
 }
 
-function switchTurn(side) {
+async function advanceItem() {
+  if (!state.current) return;
+  const manifest = await loadManifest();
+  const cat = manifest.categories.find(c=>c.id===state.current.categoryId);
+  if (!cat) { state.current = undefined; state.scene = 'category_select'; return; }
+  const nextIndex = state.current.itemIndex + 1;
+  const item = cat.items.find(i=>i.index===nextIndex);
+  if (item) {
+    state.current = { categoryId: cat.id, itemIndex: item.index, src: item.src, answer: item.answer, revealed:false };
+    const itemSel = document.getElementById('item');
+    if (itemSel) itemSel.value = item.index;
+  } else {
+    state.current = undefined;
+    state.scene = 'category_select';
+    const itemSel = document.getElementById('item');
+    if (itemSel) itemSel.value = '';
+  }
+}
+
+async function switchTurn(side) {
   if (state.clock.runningSide !== side) return;
   applyElapsed();
+  await advanceItem();
   state.clock.runningSide = side === 'left' ? 'right' : 'left';
   state.clock.lastSwitchTs = Date.now();
   saveState(state);

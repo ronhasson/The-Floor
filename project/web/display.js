@@ -36,7 +36,7 @@ function render() {
       }
       imgSrc = encodeURI(imgSrc);
     }
-    const img = state.current ? `<img src="${imgSrc}" class="item">` : '';
+    const img = state.current?.src ? `<img src="${imgSrc}" class="item">` : '';
     const ans = state.current?.revealed ? `<div class="answer">${state.current.answer}</div>` : '';
     root.innerHTML = `\n      <div class="clock left ${state.clock.runningSide==='left'?'active':''}">${left}<br>${Math.ceil(state.clock.leftRemainingMs/1000)}</div>\n      ${img}\n      <div class="clock right ${state.clock.runningSide==='right'?'active':''}">${right}<br>${Math.ceil(state.clock.rightRemainingMs/1000)}</div>\n      ${ans}`;
     if (scene === 'pause') {
