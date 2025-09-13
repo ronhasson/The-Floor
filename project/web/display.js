@@ -30,7 +30,11 @@ function render() {
     const right = state.players.find(p=>p.id===state.rightPlayerId)?.name || 'Right';
     let imgSrc = '';
     if (state.current?.src) {
-      imgSrc = state.current.src.startsWith('/') ? '..' + state.current.src : state.current.src;
+      imgSrc = state.current.src;
+      if (imgSrc.startsWith('/') && window.location.protocol === 'file:') {
+        imgSrc = '..' + imgSrc;
+      }
+      imgSrc = encodeURI(imgSrc);
     }
     const img = state.current ? `<img src="${imgSrc}" class="item">` : '';
     const ans = state.current?.revealed ? `<div class="answer">${state.current.answer}</div>` : '';
@@ -59,9 +63,5 @@ channel.onmessage = e => {
   state = e.data;
   render();
 };
-
-document.getElementById('open-operator')?.addEventListener('click', () => {
-  window.open('operator.html', 'operator');
-});
 
 init();
