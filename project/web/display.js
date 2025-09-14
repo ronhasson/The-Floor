@@ -66,8 +66,43 @@ function render() {
 }
 
 function renderPlayers() {
-  if (!state.players.length) return '';
-  return '<ul>' + state.players.map(p=>`<li>${p.name}${p.eliminated?' (out)':''} - ${p.score}</li>`).join('') + '</ul>';
+  if (!state.players.length || !state.grid) return '';
+  const grid = state.grid;
+  const container = document.createElement('div');
+  container.className = 'player-grid';
+  container.style.gridTemplateColumns = `repeat(${grid.cols}, 1fr)`;
+  container.style.gridTemplateRows = `repeat(${grid.rows}, 1fr)`;
+  container.style.gap = '0';
+  const used = new Set();
+
+  for (let r = 0; r < grid.rows; r++) {
+    for (let c = 0; c < grid.cols; c++) {
+      const idx = r * grid.cols + c;
+      const pid = grid.cells[idx];
+      const cell = document.createElement('div');
+      cell.className = 'player-cell';
+      if (pid) {
+        const player = state.players.find(p => p.id === pid);
+        cell.style.background = playerColor(pid);
+        cell.style.color = '#000';
+        if (player && !used.has(pid)) {
+          cell.textContent = `${player.name} - ${player.score}`;
+          used.add(pid);
+        }
+      }
+      container.appendChild(cell);
+    }
+  }
+  return container.outerHTML;
+}
+
+function playerColor(id) {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = (hash * 31 + id.charCodeAt(i)) >>> 0;
+  }
+  const hue = hash % 360;
+  return `hsl(${hue}, 70%, 70%)`;
 }
 
 channel.onmessage = e => {
