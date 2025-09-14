@@ -33,6 +33,7 @@ async function init() {
   updateLastSavedUI(state.lastSavedAt);
   document.getElementById('setting-total').value = settings.defaultTotalMs;
   document.getElementById('setting-skip').value = settings.penaltySkipMs;
+  document.getElementById('setting-reveal').value = settings.correctRevealMs;
   await loadManifest().then(populateCategories);
   renderPlayers();
   renderDuelSelectors();
@@ -202,6 +203,7 @@ function initClock(total) {
   };
   state.scene = 'duel_live';
   state.penaltyUntil = null;
+  state.correctUntil = null;
 }
 
 document.getElementById('open-display').addEventListener('click', () => {
@@ -327,6 +329,7 @@ function reveal() {
 
 async function nextItem() {
   state.penaltyUntil = null;
+  state.correctUntil = null;
   await advanceItem();
   if (!state.current) {
     state.scene = 'category_select';
@@ -338,7 +341,9 @@ async function nextItem() {
 function penaltySkip() {
   if (state.penaltyUntil || !state.clock.runningSide) return;
   const ms = settings.penaltySkipMs || 3000;
+  if (state.current) state.current.revealed = true;
   state.penaltyUntil = Date.now() + ms;
+  state.correctUntil = null;
   saveState(state);
   setTimeout(async () => {
     await nextItem();
@@ -358,9 +363,16 @@ document.getElementById('start-duel').addEventListener('click', startDuel);
 document.getElementById('pause-duel').addEventListener('click', pauseToggle);
 
 document.getElementById('correct').addEventListener('click', () => {
-  if (state.clock.runningSide) {
-    switchTurn(state.clock.runningSide);
-  }
+  if (!state.clock.runningSide || state.correctUntil) return;
+  const side = state.clock.runningSide;
+  const ms = settings.correctRevealMs || 1000;
+  if (state.current) state.current.revealed = true;
+  state.correctUntil = Date.now() + ms;
+  saveState(state);
+  setTimeout(async () => {
+    state.correctUntil = null;
+    await switchTurn(side);
+  }, ms);
 });
 
 document.getElementById('reveal').addEventListener('click', reveal);
@@ -460,8 +472,10 @@ document.getElementById('reset-show').addEventListener('click', () => {
 document.getElementById('save-settings').addEventListener('click', () => {
   const val = parseInt(document.getElementById('setting-total').value,10);
   const skip = parseInt(document.getElementById('setting-skip').value,10);
+  const reveal = parseInt(document.getElementById('setting-reveal').value,10);
   if (!isNaN(val)) settings.defaultTotalMs = val;
   if (!isNaN(skip)) settings.penaltySkipMs = skip;
+  if (!isNaN(reveal)) settings.correctRevealMs = reveal;
   saveSettings(settings);
   alert('Settings saved');
 });
