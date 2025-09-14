@@ -96,7 +96,10 @@ function renderPlayers() {
   return container.outerHTML;
 }
 
-const PLAYER_COLORS = Array.from({ length: 12 }, (_, i) => `hsl(${i * 30}, 70%, 80%)`);
+const PLAYER_COLORS = Array.from(
+  { length: 16 },
+  (_, i) => `hsl(${i * (360 / 16)}, 70%, 80%)`
+);
 function playerColor(id) {
   let hash = 0;
   for (let i = 0; i < id.length; i++) {
