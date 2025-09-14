@@ -34,12 +34,15 @@ async function init() {
   document.getElementById('setting-total').value = settings.defaultTotalMs;
   document.getElementById('setting-skip').value = settings.penaltySkipMs;
   document.getElementById('setting-reveal').value = settings.correctRevealMs;
-  await loadManifest().then(populateCategories);
+  const manifest = await loadManifest();
+  populateCategories(manifest);
+  ensurePlayersFromManifest(manifest);
   renderPlayers();
   renderDuelSelectors();
   tickLoop();
   updateDisplayStatus();
   renderAnswer();
+  suggestCategoryForRightPlayer();
 }
 
 // Player management ----------------------------------------------------
@@ -94,6 +97,18 @@ document.getElementById('player-list').addEventListener('click', e => {
   }
 });
 
+function ensurePlayersFromManifest(manifest) {
+  if (state.players.length) return;
+  const seen = new Set();
+  manifest.categories.forEach(c => {
+    if (!seen.has(c.player)) {
+      seen.add(c.player);
+      state.players.push({ id: crypto.randomUUID(), name: c.player, score: 0, eliminated: false });
+    }
+  });
+  saveState(state);
+}
+
 // Between battles ------------------------------------------------------
 
 document.getElementById('show-players-screen').addEventListener('click', () => {
@@ -132,12 +147,27 @@ function renderDuelSelectors() {
 }
 
 ['left-player','right-player'].forEach(id => {
-  document.getElementById(id).addEventListener('change', e => {
-    if (id === 'left-player') state.leftPlayerId = e.target.value || undefined;
-    else state.rightPlayerId = e.target.value || undefined;
+  document.getElementById(id).addEventListener('change', async e => {
+    if (id === 'left-player') {
+      state.leftPlayerId = e.target.value || undefined;
+    } else {
+      state.rightPlayerId = e.target.value || undefined;
+      await suggestCategoryForRightPlayer();
+    }
     saveState(state);
   });
 });
+
+async function suggestCategoryForRightPlayer() {
+  const player = state.players.find(p => p.id === state.rightPlayerId);
+  if (!player) return;
+  const manifest = await loadManifest();
+  const cat = manifest.categories.find(c => c.player === player.name);
+  if (!cat) return;
+  const catSel = document.getElementById('category');
+  catSel.value = cat.id;
+  catSel.dispatchEvent(new Event('change'));
+}
 
 function renderAnswer() {
   const el = document.getElementById('current-answer');
@@ -145,13 +175,13 @@ function renderAnswer() {
   el.textContent = state.current?.answer || '';
 }
 
-async function populateCategories() {
-  const manifest = await loadManifest();
+async function populateCategories(manifest) {
+  if (!manifest) manifest = await loadManifest();
   const catSel = document.getElementById('category');
   catSel.innerHTML = '<option value="">--</option>';
   manifest.categories.forEach(c => {
     const opt = document.createElement('option');
-    opt.value = c.id; opt.textContent = c.name;
+    opt.value = c.id; opt.textContent = `${c.name} (${c.player})`;
     catSel.appendChild(opt);
   });
 }
