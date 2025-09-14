@@ -144,10 +144,10 @@ function ensureGrid() {
   const total = state.players.reduce((sum,p)=>sum + (p.cells||0), 0);
   const cols = Math.ceil(Math.sqrt(total));
   const rows = Math.ceil(total / cols);
-  if (!state.grid || state.grid.rows !== rows || state.grid.cols !== cols || state.grid.cells.length !== rows*cols) {
-    const cells = [];
-    state.players.forEach(p => { for (let i=0;i<(p.cells||0);i++) cells.push(p.id); });
-    while (cells.length < rows*cols) cells.push(null);
+  const cells = [];
+  state.players.forEach(p => { for (let i=0;i<(p.cells||0);i++) cells.push(p.id); });
+  while (cells.length < rows*cols) cells.push(null);
+  if (!state.grid || state.grid.rows !== rows || state.grid.cols !== cols || state.grid.cells.length !== rows*cols || state.grid.cells.some((id,i)=>id!==cells[i])) {
     state.grid = { rows, cols, cells };
     changed = true;
   }
@@ -165,6 +165,7 @@ function transferGridAreas(winnerId, loserId) {
   const lose = state.players.find(p=>p.id===loserId);
   if (win) win.cells = (win.cells || 0) + moved;
   if (lose) lose.cells = 0;
+  ensureGrid();
 }
 
 // Between battles ------------------------------------------------------
