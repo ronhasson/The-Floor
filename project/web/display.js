@@ -44,9 +44,13 @@ function render() {
     const ans = state.current?.revealed ? `<div class="answer">${state.current.answer}</div>` : '';
     const penalty = state.penaltyUntil && Date.now() < state.penaltyUntil;
     const correct = state.correctUntil && Date.now() < state.correctUntil;
-    const leftClass = `clock left ${state.clock.runningSide==='left'?'active':''} ${penalty && state.clock.runningSide==='left'?'penalty':''} ${correct && state.clock.runningSide==='left'?'correct':''}`;
-    const rightClass = `clock right ${state.clock.runningSide==='right'?'active':''} ${penalty && state.clock.runningSide==='right'?'penalty':''} ${correct && state.clock.runningSide==='right'?'correct':''}`;
+    const leftClass = `clock left ${state.clock.runningSide==='left'?'active':''} ${penalty && state.clock.runningSide==='left'?'penalty':''}`;
+    const rightClass = `clock right ${state.clock.runningSide==='right'?'active':''} ${penalty && state.clock.runningSide==='right'?'penalty':''}`;
     root.innerHTML = `\n      <div class="${leftClass}">${left}<br>${Math.ceil(state.clock.leftRemainingMs/1000)}</div>\n      ${img}\n      <div class="${rightClass}">${right}<br>${Math.ceil(state.clock.rightRemainingMs/1000)}</div>\n      ${ans}`;
+    if (correct) {
+      const selector = state.clock.runningSide === 'left' ? '.clock.left' : '.clock.right';
+      root.querySelector(selector)?.classList.add('correct');
+    }
     if (scene === 'pause') {
       const overlay = document.createElement('div');
       overlay.className = 'overlay';
