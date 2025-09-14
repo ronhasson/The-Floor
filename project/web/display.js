@@ -18,6 +18,10 @@ function render() {
   const scene = state.scene;
   if (scene === 'lobby') {
     root.innerHTML = '<h1>Arena Floor</h1>' + renderPlayers();
+  } else if (scene === 'random_player') {
+    const p = state.players.find(p=>p.id===state.randomPlayerId);
+    const name = p ? p.name : '';
+    root.innerHTML = `<h1>${name}</h1>`;
   } else if (scene === 'category_select') {
     root.innerHTML = '<h1>Stand by</h1>';
   } else if (scene === 'duel_ready') {

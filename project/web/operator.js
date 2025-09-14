@@ -92,6 +92,27 @@ document.getElementById('player-list').addEventListener('click', e => {
   }
 });
 
+// Between battles ------------------------------------------------------
+
+document.getElementById('show-players-screen').addEventListener('click', () => {
+  state.scene = 'lobby';
+  saveState(state);
+});
+
+document.getElementById('show-random-player').addEventListener('click', () => {
+  const alive = state.players.filter(p => !p.eliminated);
+  const zero = alive.filter(p => p.score === 0);
+  const pool = zero.length ? zero : alive;
+  if (!pool.length) {
+    alert('No players available');
+    return;
+  }
+  const choice = pool[Math.floor(Math.random() * pool.length)];
+  state.randomPlayerId = choice.id;
+  state.scene = 'random_player';
+  saveState(state);
+});
+
 // Duel selectors -------------------------------------------------------
 function renderDuelSelectors() {
   const leftSel = document.getElementById('left-player');
