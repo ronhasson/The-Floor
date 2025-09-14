@@ -32,6 +32,7 @@ async function init() {
   }
   updateLastSavedUI(state.lastSavedAt);
   document.getElementById('setting-total').value = settings.defaultTotalMs;
+  document.getElementById('setting-skip').value = settings.penaltySkipMs;
   await loadManifest().then(populateCategories);
   renderPlayers();
   renderDuelSelectors();
@@ -179,6 +180,7 @@ function initClock(total) {
     paused: false,
   };
   state.scene = 'duel_live';
+  state.penaltyUntil = null;
 }
 
 document.getElementById('open-display').addEventListener('click', () => {
@@ -303,12 +305,23 @@ function reveal() {
 }
 
 async function nextItem() {
+  state.penaltyUntil = null;
   await advanceItem();
   if (!state.current) {
     state.scene = 'category_select';
     state.clock.runningSide = null;
   }
   saveState(state);
+}
+
+function penaltySkip() {
+  if (state.penaltyUntil || !state.clock.runningSide) return;
+  const ms = settings.penaltySkipMs || 3000;
+  state.penaltyUntil = Date.now() + ms;
+  saveState(state);
+  setTimeout(async () => {
+    await nextItem();
+  }, ms);
 }
 
 function resetDuel() {
@@ -336,7 +349,7 @@ document.getElementById('timeout').addEventListener('click', timeout);
 document.getElementById('win-left').addEventListener('click', () => declareWinner('left'));
 
 document.getElementById('win-right').addEventListener('click', () => declareWinner('right'));
-
+document.getElementById('penalty-skip').addEventListener('click', penaltySkip);
 document.getElementById('next-item').addEventListener('click', nextItem);
 
 document.getElementById('reset-duel').addEventListener('click', resetDuel);
@@ -425,11 +438,11 @@ document.getElementById('reset-show').addEventListener('click', () => {
 
 document.getElementById('save-settings').addEventListener('click', () => {
   const val = parseInt(document.getElementById('setting-total').value,10);
-  if (!isNaN(val)) {
-    settings.defaultTotalMs = val;
-    saveSettings(settings);
-    alert('Settings saved');
-  }
+  const skip = parseInt(document.getElementById('setting-skip').value,10);
+  if (!isNaN(val)) settings.defaultTotalMs = val;
+  if (!isNaN(skip)) settings.penaltySkipMs = skip;
+  saveSettings(settings);
+  alert('Settings saved');
 });
 
 // Chess clock loop -----------------------------------------------------
