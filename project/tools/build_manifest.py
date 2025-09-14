@@ -3,7 +3,7 @@
 Manifest builder for Arena Floor.
 
 Usage:
-1. Put images under project/GameFolder/<CategoryName>/
+1. Put images under project/GameFolder/<Player - Category>/
 2. From project/, run: python tools/build_manifest.py
 3. Serve project/ statically (e.g., python -m http.server) and open /web/operator.html
 """
@@ -24,7 +24,11 @@ def slugify(name: str) -> str:
 def build_manifest(root: Path) -> dict:
     categories = []
     for cat_dir in sorted(p for p in root.iterdir() if p.is_dir()):
-        cat_name = cat_dir.name
+        folder_name = cat_dir.name
+        if ' - ' in folder_name:
+            player, cat_name = folder_name.split(' - ', 1)
+        else:
+            player, cat_name = '', folder_name
         cat_id = slugify(cat_name)
         items = []
         files = [p for p in cat_dir.iterdir() if p.is_file() and p.suffix.lower() in EXTS]
@@ -40,9 +44,9 @@ def build_manifest(root: Path) -> dict:
                 answer = f.stem
                 auto_index += 1
             item_id = f"{cat_id}-{index}"
-            src = '/' + str((GAME_FOLDER / cat_name / f.name).as_posix())
+            src = '/' + str((cat_dir / f.name).as_posix())
             items.append({'id': item_id, 'index': index, 'answer': answer, 'src': src})
-        categories.append({'id': cat_id, 'name': cat_name, 'items': items})
+        categories.append({'id': cat_id, 'name': cat_name, 'player': player, 'items': items})
     return {
         'version': 1,
         'generatedAt': datetime.datetime.utcnow().isoformat() + 'Z',

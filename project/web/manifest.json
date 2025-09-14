@@ -1,52 +1,79 @@
 {
   "version": 1,
-  "generatedAt": "2025-09-14T18:11:27.005143Z",
+  "generatedAt": "2025-09-14T18:22:32.275861Z",
   "categories": [
-    {
-      "id": "shoe-brands",
-      "name": "Shoe Brands",
-      "items": [
-        {
-          "id": "shoe-brands-1",
-          "index": 1,
-          "answer": "Nike",
-          "src": "/GameFolder/Shoe Brands/1 - Nike.png"
-        },
-        {
-          "id": "shoe-brands-2",
-          "index": 2,
-          "answer": "Addidas",
-          "src": "/GameFolder/Shoe Brands/2 - Addidas.png"
-        },
-        {
-          "id": "shoe-brands-3",
-          "index": 3,
-          "answer": "Blundstones",
-          "src": "/GameFolder/Shoe Brands/3 - Blundstones.png"
-        }
-      ]
-    },
     {
       "id": "transportation",
       "name": "Transportation",
+      "player": "Omri",
       "items": [
         {
           "id": "transportation-1",
           "index": 1,
           "answer": "Bike",
-          "src": "/GameFolder/Transportation/1 - Bike.png"
+          "src": "/GameFolder/Omri - Transportation/1 - Bike.png"
         },
         {
           "id": "transportation-2",
           "index": 2,
           "answer": "Bus",
-          "src": "/GameFolder/Transportation/2 - Bus.png"
+          "src": "/GameFolder/Omri - Transportation/2 - Bus.png"
         },
         {
           "id": "transportation-3",
           "index": 3,
           "answer": "Car",
-          "src": "/GameFolder/Transportation/3 - Car.png"
+          "src": "/GameFolder/Omri - Transportation/3 - Car.png"
+        }
+      ]
+    },
+    {
+      "id": "shoe-brands",
+      "name": "Shoe Brands",
+      "player": "Ron",
+      "items": [
+        {
+          "id": "shoe-brands-1",
+          "index": 1,
+          "answer": "Nike",
+          "src": "/GameFolder/Ron - Shoe Brands/1 - Nike.png"
+        },
+        {
+          "id": "shoe-brands-2",
+          "index": 2,
+          "answer": "Addidas",
+          "src": "/GameFolder/Ron - Shoe Brands/2 - Addidas.png"
+        },
+        {
+          "id": "shoe-brands-3",
+          "index": 3,
+          "answer": "Blundstones",
+          "src": "/GameFolder/Ron - Shoe Brands/3 - Blundstones.png"
+        }
+      ]
+    },
+    {
+      "id": "untitled",
+      "name": "נעליים",
+      "player": "בועז",
+      "items": [
+        {
+          "id": "untitled-1",
+          "index": 1,
+          "answer": "Nike",
+          "src": "/GameFolder/בועז - נעליים/1 - Nike.png"
+        },
+        {
+          "id": "untitled-2",
+          "index": 2,
+          "answer": "Addidas",
+          "src": "/GameFolder/בועז - נעליים/2 - Addidas.png"
+        },
+        {
+          "id": "untitled-3",
+          "index": 3,
+          "answer": "Blundstones",
+          "src": "/GameFolder/בועז - נעליים/3 - Blundstones.png"
         }
       ]
     }
