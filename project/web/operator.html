@@ -7,6 +7,15 @@
 </head>
 <body>
   <h1>Arena Floor Operator</h1>
+
+  <section id="display">
+    <h2>Display</h2>
+    <div class="controls">
+      <button id="open-display">Open Display Window</button>
+      <span id="display-status">Display: Closed</span>
+    </div>
+  </section>
+
   <section id="players">
     <h2>Players</h2>
     <div id="player-list"></div>
@@ -35,8 +44,6 @@
       Total ms: <input id="total-ms" type="number" step="1000"> <button id="apply-total">Apply</button>
     </div>
     <div class="controls">
-      <button id="open-display">Open Display Window</button>
-      <span id="display-status">Display: Closed</span>
       <button id="show-intro">Show Battle Intro</button>
       <button id="start-duel" class="primary">Start Duel</button>
     </div>
