@@ -38,6 +38,7 @@ async function init() {
   populateCategories(manifest);
   ensurePlayersFromManifest(manifest);
   assignCategoryInfoFromManifest(manifest);
+  ensureGrid();
   renderPlayers();
   renderDuelSelectors();
   tickLoop();
@@ -67,6 +68,7 @@ document.getElementById('add-player').addEventListener('click', () => {
   const name = prompt('Player name?');
   if (!name) return;
   state.players.push({ id: crypto.randomUUID(), name, score: 0, eliminated: false, origCatId: null, currCatId: null });
+  ensureGrid();
   saveState(state);
   renderPlayers();
   renderDuelSelectors();
@@ -96,6 +98,7 @@ document.getElementById('player-list').addEventListener('click', e => {
   } else if (e.target.classList.contains('p-remove')) {
     if (confirm('Remove player?')) {
       state.players = state.players.filter(p => p.id !== e.target.dataset.id);
+      ensureGrid();
       saveState(state);
       renderPlayers();
       renderDuelSelectors();
@@ -131,6 +134,37 @@ function assignCategoryInfoFromManifest(manifest) {
     }
   });
   if (changed) saveState(state);
+}
+
+function ensureGrid() {
+  let changed = false;
+  state.players.forEach(p => {
+    if (p.cells == null) { p.cells = 1; changed = true; }
+  });
+  const total = state.players.reduce((sum,p)=>sum + (p.cells||0), 0);
+  const cols = Math.ceil(Math.sqrt(total));
+  const rows = Math.ceil(total / cols);
+  if (!state.grid || state.grid.rows !== rows || state.grid.cols !== cols || state.grid.cells.length !== rows*cols) {
+    const cells = [];
+    state.players.forEach(p => { for (let i=0;i<(p.cells||0);i++) cells.push(p.id); });
+    while (cells.length < rows*cols) cells.push(null);
+    state.grid = { rows, cols, cells };
+    changed = true;
+  }
+  if (changed) saveState(state);
+}
+
+function transferGridAreas(winnerId, loserId) {
+  if (!state.grid) return;
+  let moved = 0;
+  state.grid.cells = state.grid.cells.map(id => {
+    if (id === loserId) { moved++; return winnerId; }
+    return id;
+  });
+  const win = state.players.find(p=>p.id===winnerId);
+  const lose = state.players.find(p=>p.id===loserId);
+  if (win) win.cells = (win.cells || 0) + moved;
+  if (lose) lose.cells = 0;
 }
 
 // Between battles ------------------------------------------------------
@@ -386,6 +420,7 @@ function declareWinner(side) {
   if (p) p.score += 1;
   if (confirm('Eliminate loser?')) {
     const lp = state.players.find(x=>x.id===loseId); if(lp) lp.eliminated = true;
+    transferGridAreas(winId, loseId);
     if (p && leftCat !== undefined) p.currCatId = leftCat;
   }
   saveState(state);

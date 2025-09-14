@@ -16,7 +16,12 @@ export async function loadManifest() {
 }
 
 export function migrateState(s) {
-  // placeholder for future migrations
+  // ensure new properties exist
+  if (s.players) {
+    s.players.forEach(p => {
+      if (p.cells == null) p.cells = 1;
+    });
+  }
   return s;
 }
 
@@ -28,6 +33,7 @@ export function freshState() {
     scene: 'lobby',
     players: [],
     randomPlayerId: null,
+    grid: { rows: 0, cols: 0, cells: [] },
     clock: {
       totalMs: 0,
       leftRemainingMs: 0,
