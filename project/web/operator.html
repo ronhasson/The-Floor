@@ -13,7 +13,7 @@
     <button id="add-player">Add Player</button>
   </section>
 
-  <section id="duel">
+  <section id="duel-setup">
     <h2>Duel Setup</h2>
     <div>
       Left: <select id="left-player"></select>
@@ -29,10 +29,16 @@
     <div class="controls">
       <button id="open-display">Open Display Window</button>
       <span id="display-status">Display: Closed</span>
+      <button id="show-intro">Show Battle Intro</button>
       <button id="start-duel" class="primary">Start Duel</button>
+    </div>
+  </section>
+
+  <section id="duel-battle">
+    <h2>Duel Battle</h2>
+    <div class="controls">
       <button id="pause-duel">Pause</button>
-      <button id="switch-left" class="primary">Correct (Left)</button>
-      <button id="switch-right" class="primary">Correct (Right)</button>
+      <button id="correct" class="primary">Correct</button>
       <button id="reveal">Reveal Answer</button>
       <button id="timeout">Timeout</button>
       <button id="win-left" class="primary">Declare Left Winner</button>

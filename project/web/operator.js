@@ -199,6 +199,11 @@ document.getElementById('apply-total').addEventListener('click', () => {
   }
 });
 
+document.getElementById('show-intro').addEventListener('click', async () => {
+  await ensureCurrentItem();
+  saveState(state);
+});
+
 async function startDuel() {
   await ensureCurrentItem();
   if (!state.current?.src) {
@@ -297,10 +302,12 @@ function reveal() {
   saveState(state);
 }
 
-function nextItem() {
-  state.current = undefined;
-  state.scene = 'category_select';
-  state.clock.runningSide = null;
+async function nextItem() {
+  await advanceItem();
+  if (!state.current) {
+    state.scene = 'category_select';
+    state.clock.runningSide = null;
+  }
   saveState(state);
 }
 
@@ -316,9 +323,11 @@ document.getElementById('start-duel').addEventListener('click', startDuel);
 
 document.getElementById('pause-duel').addEventListener('click', pauseToggle);
 
-document.getElementById('switch-left').addEventListener('click', () => switchTurn('left'));
-
-document.getElementById('switch-right').addEventListener('click', () => switchTurn('right'));
+document.getElementById('correct').addEventListener('click', () => {
+  if (state.clock.runningSide) {
+    switchTurn(state.clock.runningSide);
+  }
+});
 
 document.getElementById('reveal').addEventListener('click', reveal);
 
