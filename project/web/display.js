@@ -38,7 +38,10 @@ function render() {
     }
     const img = state.current?.src ? `<img src="${imgSrc}" class="item">` : '';
     const ans = state.current?.revealed ? `<div class="answer">${state.current.answer}</div>` : '';
-    root.innerHTML = `\n      <div class="clock left ${state.clock.runningSide==='left'?'active':''}">${left}<br>${Math.ceil(state.clock.leftRemainingMs/1000)}</div>\n      ${img}\n      <div class="clock right ${state.clock.runningSide==='right'?'active':''}">${right}<br>${Math.ceil(state.clock.rightRemainingMs/1000)}</div>\n      ${ans}`;
+    const penalty = state.penaltyUntil && Date.now() < state.penaltyUntil;
+    const leftClass = `clock left ${state.clock.runningSide==='left'?'active':''} ${penalty && state.clock.runningSide==='left'?'penalty':''}`;
+    const rightClass = `clock right ${state.clock.runningSide==='right'?'active':''} ${penalty && state.clock.runningSide==='right'?'penalty':''}`;
+    root.innerHTML = `\n      <div class="${leftClass}">${left}<br>${Math.ceil(state.clock.leftRemainingMs/1000)}</div>\n      ${img}\n      <div class="${rightClass}">${right}<br>${Math.ceil(state.clock.rightRemainingMs/1000)}</div>\n      ${ans}`;
     if (scene === 'pause') {
       const overlay = document.createElement('div');
       overlay.className = 'overlay';

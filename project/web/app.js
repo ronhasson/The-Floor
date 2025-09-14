@@ -35,6 +35,7 @@ export function freshState() {
       lastSwitchTs: null,
       paused: true,
     },
+    penaltyUntil: null,
   };
 }
 
@@ -58,11 +59,12 @@ export function saveState(state) {
 
 export function loadSettings() {
   const raw = localStorage.getItem(LS_SETTINGS);
-  if (!raw) return { defaultTotalMs: 45000 };
+  const defaults = { defaultTotalMs: 45000, penaltySkipMs: 3000 };
+  if (!raw) return defaults;
   try {
-    return Object.assign({ defaultTotalMs: 45000 }, JSON.parse(raw));
+    return Object.assign({}, defaults, JSON.parse(raw));
   } catch {
-    return { defaultTotalMs: 45000 };
+    return defaults;
   }
 }
 
