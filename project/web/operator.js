@@ -38,6 +38,7 @@ async function init() {
   renderDuelSelectors();
   tickLoop();
   updateDisplayStatus();
+  renderAnswer();
 }
 
 // Player management ----------------------------------------------------
@@ -137,6 +138,12 @@ function renderDuelSelectors() {
   });
 });
 
+function renderAnswer() {
+  const el = document.getElementById('current-answer');
+  if (!el) return;
+  el.textContent = state.current?.answer || '';
+}
+
 async function populateCategories() {
   const manifest = await loadManifest();
   const catSel = document.getElementById('category');
@@ -173,6 +180,7 @@ document.getElementById('item').addEventListener('change', async e => {
   state.current = { categoryId: cat.id, itemIndex: item.index, src: item.src, answer: item.answer, revealed:false };
   state.scene = 'duel_ready';
   saveState(state);
+  renderAnswer();
 });
 
 async function ensureCurrentItem() {
@@ -188,6 +196,7 @@ async function ensureCurrentItem() {
   const itemSel = document.getElementById('item');
   if (itemSel) itemSel.value = item.index;
   state.scene = 'duel_ready';
+  renderAnswer();
 }
 
 // Clock and duel control -----------------------------------------------
@@ -268,6 +277,7 @@ async function advanceItem() {
     const itemSel = document.getElementById('item');
     if (itemSel) itemSel.value = '';
   }
+  renderAnswer();
 }
 
 async function switchTurn(side) {
@@ -411,6 +421,7 @@ document.getElementById('edit-json').addEventListener('click', () => {
       saveState(state);
       renderPlayers();
       renderDuelSelectors();
+      renderAnswer();
       modal.classList.add('hidden');
     } catch (e) {
       alert('Invalid JSON: ' + e.message);
@@ -439,6 +450,7 @@ document.getElementById('import-file').addEventListener('change', async e => {
     saveState(state);
     renderPlayers();
     renderDuelSelectors();
+    renderAnswer();
     alert('Import successful');
   } catch (err) {
     alert('Import failed: ' + err.message);
@@ -453,6 +465,7 @@ document.getElementById('reset-show').addEventListener('click', () => {
     saveState(state);
     renderPlayers();
     renderDuelSelectors();
+    renderAnswer();
     alert('Show reset');
   }
 });
