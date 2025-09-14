@@ -27,6 +27,7 @@ export function freshState() {
     lastSavedAt: Date.now(),
     scene: 'lobby',
     players: [],
+    randomPlayerId: null,
     clock: {
       totalMs: 0,
       leftRemainingMs: 0,
