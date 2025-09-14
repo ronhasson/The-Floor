@@ -37,6 +37,7 @@ async function init() {
   const manifest = await loadManifest();
   populateCategories(manifest);
   ensurePlayersFromManifest(manifest);
+  assignCategoryInfoFromManifest(manifest);
   renderPlayers();
   renderDuelSelectors();
   tickLoop();
@@ -46,13 +47,18 @@ async function init() {
 }
 
 // Player management ----------------------------------------------------
-function renderPlayers() {
+async function renderPlayers() {
   const list = document.getElementById('player-list');
   list.innerHTML = '';
+  const manifest = await loadManifest();
+  const catMap = {};
+  manifest.categories.forEach(c => { catMap[c.id] = c.name; });
   state.players.forEach(p => {
     const div = document.createElement('div');
     div.className = 'player-row';
-    div.innerHTML = `\n      <input value="${p.name}" data-id="${p.id}" class="p-name">\n      <span>Score: ${p.score}</span>\n      <label><input type="checkbox" class="p-elim" data-id="${p.id}" ${p.eliminated? 'checked':''}> Eliminated</label>\n      <button class="p-reset" data-id="${p.id}">Reset Score</button>\n      <button class="p-remove" data-id="${p.id}">Remove</button>`;
+    const orig = p.origCatId ? catMap[p.origCatId] || p.origCatId : '-';
+    const curr = p.currCatId ? catMap[p.currCatId] || p.currCatId : '-';
+    div.innerHTML = `\n      <input value="${p.name}" data-id="${p.id}" class="p-name">\n      <span>Score: ${p.score}</span>\n      <span>Orig: ${orig}</span>\n      <span>Current: ${curr}</span>\n      <label><input type="checkbox" class="p-elim" data-id="${p.id}" ${p.eliminated? 'checked':''}> Eliminated</label>\n      <button class="p-reset" data-id="${p.id}">Reset Score</button>\n      <button class="p-remove" data-id="${p.id}">Remove</button>`;
     list.appendChild(div);
   });
 }
@@ -60,7 +66,7 @@ function renderPlayers() {
 document.getElementById('add-player').addEventListener('click', () => {
   const name = prompt('Player name?');
   if (!name) return;
-  state.players.push({ id: crypto.randomUUID(), name, score: 0, eliminated: false });
+  state.players.push({ id: crypto.randomUUID(), name, score: 0, eliminated: false, origCatId: null, currCatId: null });
   saveState(state);
   renderPlayers();
   renderDuelSelectors();
@@ -103,10 +109,28 @@ function ensurePlayersFromManifest(manifest) {
   manifest.categories.forEach(c => {
     if (!seen.has(c.player)) {
       seen.add(c.player);
-      state.players.push({ id: crypto.randomUUID(), name: c.player, score: 0, eliminated: false });
+      state.players.push({ id: crypto.randomUUID(), name: c.player, score: 0, eliminated: false, origCatId: c.id, currCatId: c.id });
     }
   });
   saveState(state);
+}
+
+function assignCategoryInfoFromManifest(manifest) {
+  let changed = false;
+  state.players.forEach(p => {
+    if (!p.origCatId) {
+      const cat = manifest.categories.find(c => c.player === p.name);
+      if (cat) {
+        p.origCatId = cat.id;
+        p.currCatId = p.currCatId || cat.id;
+        changed = true;
+      }
+    } else if (!p.currCatId) {
+      p.currCatId = p.origCatId;
+      changed = true;
+    }
+  });
+  if (changed) saveState(state);
 }
 
 // Between battles ------------------------------------------------------
@@ -161,10 +185,15 @@ function renderDuelSelectors() {
 async function suggestCategoryForRightPlayer() {
   const player = state.players.find(p => p.id === state.rightPlayerId);
   if (!player) return;
+  const catSel = document.getElementById('category');
+  if (player.currCatId) {
+    catSel.value = player.currCatId;
+    catSel.dispatchEvent(new Event('change'));
+    return;
+  }
   const manifest = await loadManifest();
   const cat = manifest.categories.find(c => c.player === player.name);
   if (!cat) return;
-  const catSel = document.getElementById('category');
   catSel.value = cat.id;
   catSel.dispatchEvent(new Event('change'));
 }
@@ -352,10 +381,12 @@ function declareWinner(side) {
   state.clock.runningSide = null;
   const winId = side === 'left' ? state.leftPlayerId : state.rightPlayerId;
   const loseId = side === 'left' ? state.rightPlayerId : state.leftPlayerId;
+  const leftCat = state.players.find(x=>x.id===state.leftPlayerId)?.currCatId;
   const p = state.players.find(x=>x.id===winId);
   if (p) p.score += 1;
   if (confirm('Eliminate loser?')) {
     const lp = state.players.find(x=>x.id===loseId); if(lp) lp.eliminated = true;
+    if (p && leftCat !== undefined) p.currCatId = leftCat;
   }
   saveState(state);
   renderPlayers();
@@ -455,11 +486,12 @@ document.getElementById('edit-json').addEventListener('click', () => {
   modal.innerHTML = `<div class="modal"><textarea id="state-text" rows="20" cols="80"></textarea><br><button id="apply-json">Validate & Apply</button><button id="cancel-json">Cancel</button></div>`;
   modal.classList.remove('hidden');
   document.getElementById('state-text').value = JSON.stringify(state, null, 2);
-  document.getElementById('apply-json').onclick = () => {
+  document.getElementById('apply-json').onclick = async () => {
     try {
       const obj = JSON.parse(document.getElementById('state-text').value);
       if (!obj || obj.version !== 1) throw new Error('Bad shape');
       state = migrateState(obj);
+      assignCategoryInfoFromManifest(await loadManifest());
       saveState(state);
       renderPlayers();
       renderDuelSelectors();
@@ -489,6 +521,8 @@ document.getElementById('import-file').addEventListener('change', async e => {
     if (!obj || obj.version !== 1) throw new Error('Bad shape');
     backupState(state);
     state = obj;
+    const manifest = await loadManifest();
+    assignCategoryInfoFromManifest(manifest);
     saveState(state);
     renderPlayers();
     renderDuelSelectors();
