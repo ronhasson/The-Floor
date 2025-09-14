@@ -73,40 +73,27 @@ function renderPlayers() {
   container.style.gridTemplateColumns = `repeat(${grid.cols}, 1fr)`;
   container.style.gridTemplateRows = `repeat(${grid.rows}, 1fr)`;
   container.style.gap = '0';
-  const areaRows = [];
   const used = new Set();
+
   for (let r = 0; r < grid.rows; r++) {
-    const names = [];
     for (let c = 0; c < grid.cols; c++) {
       const idx = r * grid.cols + c;
       const pid = grid.cells[idx];
+      const cell = document.createElement('div');
+      cell.className = 'player-cell';
       if (pid) {
-        const an = areaName(pid);
-        names.push(an);
-        used.add(pid);
-      } else {
-        names.push('.');
+        const player = state.players.find(p => p.id === pid);
+        cell.style.background = playerColor(pid);
+        cell.style.color = '#000';
+        if (player && !used.has(pid)) {
+          cell.textContent = `${player.name} - ${player.score}`;
+          used.add(pid);
+        }
       }
+      container.appendChild(cell);
     }
-    areaRows.push(`"${names.join(' ')}"`);
   }
-  container.style.gridTemplateAreas = areaRows.join(' ');
-  used.forEach(pid => {
-    const player = state.players.find(p => p.id === pid);
-    if (!player) return;
-    const cell = document.createElement('div');
-    cell.className = 'player-area';
-    cell.style.gridArea = areaName(pid);
-    cell.style.background = playerColor(pid);
-    cell.style.color = '#000';
-    cell.textContent = `${player.name} - ${player.score}`;
-    container.appendChild(cell);
-  });
   return container.outerHTML;
-}
-
-function areaName(id) {
-  return `p${id.replace(/[^a-zA-Z0-9]/g, '')}`;
 }
 
 function playerColor(id) {

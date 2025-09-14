@@ -138,20 +138,33 @@ function assignCategoryInfoFromManifest(manifest) {
 
 function ensureGrid() {
   let changed = false;
+  // Ensure each player tracks how many cells they currently own
   state.players.forEach(p => {
-    if (p.cells == null) { p.cells = 1; changed = true; }
+    if (p.cells == null) {
+      const count = state.grid ? state.grid.cells.filter(id => id === p.id).length : 0;
+      p.cells = count || 1;
+      changed = true;
+    }
   });
-  const total = state.players.reduce((sum,p)=>sum + (p.cells||0), 0);
+
+  const total = state.players.reduce((sum, p) => sum + (p.cells || 0), 0);
+
+  // If an existing grid already matches the total cell count, keep it as-is
+  if (state.grid && state.grid.cells.length === total) {
+    if (changed) saveState(state);
+    return;
+  }
+
+  // Otherwise rebuild a near-square grid from scratch
   const cols = Math.ceil(Math.sqrt(total));
   const rows = Math.ceil(total / cols);
   const cells = [];
-  state.players.forEach(p => { for (let i=0;i<(p.cells||0);i++) cells.push(p.id); });
-  while (cells.length < rows*cols) cells.push(null);
-  if (!state.grid || state.grid.rows !== rows || state.grid.cols !== cols || state.grid.cells.length !== rows*cols || state.grid.cells.some((id,i)=>id!==cells[i])) {
-    state.grid = { rows, cols, cells };
-    changed = true;
-  }
-  if (changed) saveState(state);
+  state.players.forEach(p => {
+    for (let i = 0; i < (p.cells || 0); i++) cells.push(p.id);
+  });
+  while (cells.length < rows * cols) cells.push(null);
+  state.grid = { rows, cols, cells };
+  saveState(state);
 }
 
 function transferGridAreas(winnerId, loserId) {
@@ -165,7 +178,6 @@ function transferGridAreas(winnerId, loserId) {
   const lose = state.players.find(p=>p.id===loserId);
   if (win) win.cells = (win.cells || 0) + moved;
   if (lose) lose.cells = 0;
-  ensureGrid();
 }
 
 // Between battles ------------------------------------------------------
