@@ -17,7 +17,7 @@ OUT_FILE = Path('web/manifest.json')
 
 # Helpers ---------------------------------------------------------------
 def slugify(name: str) -> str:
-    slug = re.sub(r'[^a-z0-9]+', '-', name.lower()).strip('-')
+    slug = re.sub(r'[^a-z0-9\u05D0-\u05EA]+', '-', name.lower()).strip('-')
     return slug or 'untitled'
 
 
