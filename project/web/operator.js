@@ -319,6 +319,7 @@ function initClock(total) {
   state.scene = 'duel_live';
   state.penaltyUntil = null;
   state.correctUntil = null;
+  state.winnerId = null;
 }
 
 document.getElementById('open-display').addEventListener('click', () => {
@@ -418,6 +419,7 @@ function timeout() {
   const winId = winner === 'left' ? state.leftPlayerId : state.rightPlayerId;
   const p = state.players.find(x=>x.id===winId);
   if (p) p.score += 1;
+  state.winnerId = winId;
   saveState(state);
   renderPlayers();
 }
@@ -431,6 +433,7 @@ function declareWinner(side) {
   const leftCat = state.players.find(x=>x.id===state.leftPlayerId)?.currCatId;
   const p = state.players.find(x=>x.id===winId);
   if (p) p.score += 1;
+  state.winnerId = winId;
   if (confirm('Eliminate loser?')) {
     const lp = state.players.find(x=>x.id===loseId); if(lp) lp.eliminated = true;
     transferGridAreas(winId, loseId);

@@ -22,6 +22,7 @@ export function migrateState(s) {
       if (p.cells == null) p.cells = 1;
     });
   }
+  if (s.winnerId === undefined) s.winnerId = null;
   return s;
 }
 
@@ -44,6 +45,7 @@ export function freshState() {
     },
     penaltyUntil: null,
     correctUntil: null,
+    winnerId: null,
   };
 }
 

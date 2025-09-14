@@ -60,7 +60,13 @@ function render() {
   } else if (scene === 'result') {
     const left = state.players.find(p=>p.id===state.leftPlayerId)?.name || 'Left';
     const right = state.players.find(p=>p.id===state.rightPlayerId)?.name || 'Right';
-    const winner = state.clock.leftRemainingMs > state.clock.rightRemainingMs ? left : right;
+    let winner;
+    if (state.winnerId) {
+      winner = state.players.find(p => p.id === state.winnerId)?.name;
+    }
+    if (!winner) {
+      winner = state.clock.leftRemainingMs > state.clock.rightRemainingMs ? left : right;
+    }
     root.innerHTML = `<h1>Winner: ${winner}</h1>`;
   }
 }
