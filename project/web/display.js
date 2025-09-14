@@ -96,13 +96,13 @@ function renderPlayers() {
   return container.outerHTML;
 }
 
+const PLAYER_COLORS = Array.from({ length: 12 }, (_, i) => `hsl(${i * 30}, 70%, 80%)`);
 function playerColor(id) {
   let hash = 0;
   for (let i = 0; i < id.length; i++) {
     hash = (hash * 31 + id.charCodeAt(i)) >>> 0;
   }
-  const hue = hash % 360;
-  return `hsl(${hue}, 70%, 70%)`;
+  return PLAYER_COLORS[hash % PLAYER_COLORS.length];
 }
 
 channel.onmessage = e => {
