@@ -2,31 +2,148 @@ body {
   color: #eee;
   font-family: Arial, sans-serif;
   margin: 20px;
-  background: 
-      radial-gradient(farthest-side at -33.33% 50%,#0000 52%,#32393e 54% 57%,#0000 59%) 0 calc(128px/2),
-      radial-gradient(farthest-side at 50% 133.33%,#0000 52%,#32393e 54% 57%,#0000 59%) calc(128px/2) 0,
-      radial-gradient(farthest-side at 133.33% 50%,#0000 52%,#32393e 54% 57%,#0000 59%),
-      radial-gradient(farthest-side at 50% -33.33%,#0000 52%,#32393e 54% 57%,#0000 59%),
-      #2a2a2a;
-  background-size: calc(128px/4.667) 128px,128px calc(128px/4.667);
-
+  background: radial-gradient(
+        farthest-side at -33.33% 50%,
+        #0000 52%,
+        #32393e 54% 57%,
+        #0000 59%
+      )
+      0 calc(128px / 2),
+    radial-gradient(
+        farthest-side at 50% 133.33%,
+        #0000 52%,
+        #32393e 54% 57%,
+        #0000 59%
+      )
+      calc(128px / 2) 0,
+    radial-gradient(
+      farthest-side at 133.33% 50%,
+      #0000 52%,
+      #32393e 54% 57%,
+      #0000 59%
+    ),
+    radial-gradient(
+      farthest-side at 50% -33.33%,
+      #0000 52%,
+      #32393e 54% 57%,
+      #0000 59%
+    ),
+    #2a2a2a;
+  background-size: calc(128px / 4.667) 128px, 128px calc(128px / 4.667);
+  animation: slideBackground 5s infinite linear forwards;
+  animation-direction: normal;
+  animation-play-state: paused;
 }
-button, input, select {
+button,
+input,
+select {
   font-size: 1rem;
   margin: 4px;
 }
-.primary { background: #0a84ff; color: #fff; }
-.danger { background: #d00; color: #fff; }
-.clock { display: inline-block; width: clamp(20vw, 20rem, 50vw); text-align: center; font-size: 2rem; padding: 1rem;border-radius: 0.5rem;position: fixed;background-color: rgba(210,210,210,0.15); margin: 0 1rem }
-.clock.left { left: 0; }
-.clock.right { right: 0; }
-.clock.active { border: 2px solid yellow; }
-.clock.penalty { color: red; }
-.clock.correct { color: lime; }
-.item { max-width: 30%; max-height: 50vh; margin-top: 9rem; }
-.ready span { font-size: 2rem; margin: 0 1rem; }
-.modal { background:#222; padding:1rem; position:fixed; top:10%; left:10%; right:10%; bottom:10%; }
-.hidden { display:none; }
-.overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); display:flex; align-items:center; justify-content:center; font-size:3rem; }
-.player-grid { display:grid; width:100%; height:80vh; }
-.player-cell { display:flex; align-items:center; justify-content:center; font-weight:bold; box-sizing:border-box; }
+.primary {
+  background: #0a84ff;
+  color: #fff;
+}
+.danger {
+  background: #d00;
+  color: #fff;
+}
+#display-root {
+  text-align: center;
+}
+.clock {
+  display: inline-block;
+  width: clamp(20vw, 20rem, 50vw);
+  text-align: center;
+  font-size: 2rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  position: fixed;
+  background-color: rgba(210, 210, 210, 0.15);
+  margin: 0 1rem;
+}
+.clock.left {
+  left: 0;
+}
+.clock.right {
+  right: 0;
+}
+body:has(.clock.right.active) {
+  animation-direction: normal;
+  animation-play-state: running;
+}
+body:has(.clock.left.active) {
+  animation-direction: reverse;
+  animation-play-state: running;
+}
+.clock.active {
+  border: 2px solid yellow;
+}
+.clock.penalty {
+  color: red;
+}
+.clock.correct {
+  color: lime;
+}
+.item {
+  width: -webkit-fill-available;
+  object-fit: contain;
+  max-width: 45%;
+  max-height: 65vh;
+  margin-top: 10rem;
+}
+#display-root .answer {
+  margin-top: 3rem;
+  font-size: 2.8rem;
+}
+.ready span {
+  font-size: 2rem;
+  margin: 0 1rem;
+}
+.modal {
+  background: #222;
+  padding: 1rem;
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+}
+.hidden {
+  display: none;
+}
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+.player-grid {
+  display: grid;
+  height: 80vh;
+  max-width: 80vw;
+  aspect-ratio: 1/1;
+  margin: 0 auto;
+}
+.player-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+@keyframes slideBackground {
+  from {
+    background-position-x: 0, 128px, 0, 64px;
+  }
+  to {
+    background-position-x: 0, 384px, 0, 320px;
+  }
+}
