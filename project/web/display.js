@@ -103,8 +103,8 @@ function renderPlayers() {
               : '-';
             cell.innerHTML = `
               <div class="player-name">${player.name}</div>
-              <div class="player-score">Score: ${player.score}</div>
-              <div class="player-category">Category: ${categoryName}</div>
+              <div class="player-score">${player.score}</div>
+              <div class="player-category">${categoryName}</div>
             `.trim();
             used.add(pid);
           }

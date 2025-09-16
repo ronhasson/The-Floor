@@ -145,11 +145,11 @@ body:has(.clock.left.active) {
 
 .player-score {
   font-weight: normal;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .player-category {
   font-weight: normal;
-  font-size: 0.9rem;
 }
 
 @keyframes slideBackground {
