@@ -133,10 +133,23 @@ body:has(.clock.left.active) {
 }
 .player-cell {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-weight: bold;
   box-sizing: border-box;
+  text-align: center;
+  padding: 0.5rem;
+  gap: 0.25rem;
+}
+
+.player-score {
+  font-weight: normal;
+}
+
+.player-category {
+  font-weight: normal;
+  font-size: 0.9rem;
 }
 
 @keyframes slideBackground {
