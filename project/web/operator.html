@@ -18,7 +18,21 @@
 
   <section id="players">
     <h2>Players</h2>
-    <div id="player-list"></div>
+    <div class="players-table-wrapper">
+      <table id="player-table">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Cells</th>
+            <th scope="col">Original Category</th>
+            <th scope="col">Current Category</th>
+            <th scope="col">Eliminated</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody id="player-list"></tbody>
+      </table>
+    </div>
     <button id="add-player">Add Player</button>
   </section>
 
