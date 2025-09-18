@@ -30,9 +30,6 @@ body {
     ),
     #2a2a2a;
   background-size: calc(128px / 4.667) 128px, 128px calc(128px / 4.667);
-  animation: slideBackground 5s infinite linear forwards;
-  animation-direction: normal;
-  animation-play-state: paused;
 }
 button,
 input,
@@ -67,14 +64,6 @@ select {
 }
 .clock.right {
   right: 0;
-}
-body:has(.clock.right.active) {
-  animation-direction: normal;
-  animation-play-state: running;
-}
-body:has(.clock.left.active) {
-  animation-direction: reverse;
-  animation-play-state: running;
 }
 .clock.active {
   border: 2px solid yellow;
@@ -150,13 +139,4 @@ body:has(.clock.left.active) {
 
 .player-category {
   font-weight: normal;
-}
-
-@keyframes slideBackground {
-  from {
-    background-position-x: 0, 128px, 0, 64px;
-  }
-  to {
-    background-position-x: 0, 384px, 0, 320px;
-  }
 }
