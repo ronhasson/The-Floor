@@ -98,10 +98,11 @@ select {
   max-width: 60vw;
   padding: 2.5rem 3rem;
   border-radius: 1.5rem;
-  background: rgba(0, 0, 0, 0.6);
   font-size: 3rem;
   font-weight: 600;
   line-height: 1.3;
+  position: fixed;
+  justify-self: center;
 }
 #display-root .answer {
   margin-top: 3rem;
