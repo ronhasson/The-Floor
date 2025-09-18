@@ -693,7 +693,7 @@ function tickLoop() {
     if (state.clock.leftRemainingMs <=0 || state.clock.rightRemainingMs<=0) {
       timeout();
     } else {
-      saveState(state);
+      saveState(state, { broadcast: state.scene === 'duel_live' });
     }
   }, 50);
 }
