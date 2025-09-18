@@ -18,8 +18,22 @@ export async function loadManifest() {
 export function migrateState(s) {
   // ensure new properties exist
   if (s.players) {
+    const counts = new Map();
+    if (s.grid && Array.isArray(s.grid.cells)) {
+      s.grid.cells.forEach(id => {
+        if (!id) return;
+        counts.set(id, (counts.get(id) || 0) + 1);
+      });
+    }
     s.players.forEach(p => {
-      if (p.cells == null) p.cells = 1;
+      if (!p) return;
+      if (counts.has(p.id)) {
+        p.cells = counts.get(p.id);
+      } else if (p.cells == null) {
+        p.cells = p.eliminated ? 0 : 1;
+      } else if (p.cells < 0) {
+        p.cells = 0;
+      }
     });
   }
   if (s.winnerId === undefined) s.winnerId = null;

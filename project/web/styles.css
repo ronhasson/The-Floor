@@ -132,7 +132,7 @@ select {
   gap: 0.25rem;
 }
 
-.player-score {
+.player-cells {
   font-weight: normal;
   color: rgba(0, 0, 0, 0.7);
 }
