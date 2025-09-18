@@ -99,7 +99,7 @@ async function renderPlayers() {
     elimInput.dataset.id = p.id;
     elimInput.checked = !!p.eliminated;
     elimLabel.appendChild(elimInput);
-    elimLabel.append(' Eliminated');
+    elimLabel.append('💀');
     elimCell.appendChild(elimLabel);
     row.appendChild(elimCell);
 

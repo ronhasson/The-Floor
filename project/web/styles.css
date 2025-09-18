@@ -132,7 +132,7 @@ select {
   gap: 0.25rem;
 }
 
-.player-cells {
+.player-grid .player-cells {
   font-weight: normal;
   color: rgba(0, 0, 0, 0.7);
 }
@@ -143,16 +143,12 @@ select {
 
 #players .players-table-wrapper {
   overflow-x: auto;
+  scrollbar-width: thin;
 }
 
 #players table {
-  width: 100%;
   border-collapse: collapse;
-  min-width: 640px;
   background-color: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  overflow: hidden;
 }
 
 #players th,
@@ -160,6 +156,10 @@ select {
   padding: 0.5rem 0.75rem;
   text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#players td.player-name {
+  min-width: 16ch;
 }
 
 #players th {
