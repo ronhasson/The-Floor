@@ -32,7 +32,16 @@ function render() {
     const left = state.players.find(p=>p.id===state.leftPlayerId)?.name || 'Left';
     const right = state.players.find(p=>p.id===state.rightPlayerId)?.name || 'Right';
     const cat = manifest.categories.find(c=>c.id===state.current.categoryId)?.name || '';
-    root.innerHTML = `<h2>${cat}</h2><div class="ready"><span>${left}</span> vs <span>${right}</span></div>`;
+    root.innerHTML = `
+      <div class="duel-ready">
+        <div class="duel-category">${cat}</div>
+        <div class="duel-vs">
+          <span class="player-name">${left}</span>
+          <span class="vs-text">vs</span>
+          <span class="player-name">${right}</span>
+        </div>
+      </div>
+    `;
   } else if (scene === 'duel_live' || scene === 'pause' || scene === 'result') {
     renderDuelScene(scene);
   }

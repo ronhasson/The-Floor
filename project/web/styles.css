@@ -108,9 +108,37 @@ select {
   margin-top: 3rem;
   font-size: 2.8rem;
 }
-.ready span {
-  font-size: 2rem;
-  margin: 0 1rem;
+.duel-ready {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+.duel-category {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.duel-vs {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.duel-vs .player-name {
+  font-size: 1em;
+}
+.duel-vs .vs-text {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  opacity: 0.8;
 }
 .modal {
   background: #222;
