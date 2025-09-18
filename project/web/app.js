@@ -74,10 +74,11 @@ export function loadState() {
   }
 }
 
-export function saveState(state) {
+export function saveState(state, options = {}) {
+  const { broadcast = true } = options;
   state.lastSavedAt = Date.now();
   localStorage.setItem(LS_STATE, JSON.stringify(state));
-  channel.postMessage(state);
+  if (broadcast) channel.postMessage(state);
   updateLastSavedUI(state.lastSavedAt);
 }
 
