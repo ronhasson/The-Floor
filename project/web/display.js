@@ -81,6 +81,9 @@ function renderPlayers() {
   container.style.gap = '0';
   const used = new Set();
   const indexMap = new Map(state.players.map((p, i) => [p.id, i]));
+  const categoryMap = manifest?.categories
+    ? new Map(manifest.categories.map(c => [c.id, c.name]))
+    : new Map();
 
   for (let r = 0; r < grid.rows; r++) {
     for (let c = 0; c < grid.cols; c++) {
@@ -95,7 +98,14 @@ function renderPlayers() {
           cell.style.background = playerColor(playerIndex);
           cell.style.color = '#000';
           if (!used.has(pid)) {
-            cell.textContent = `${player.name} - ${player.score}`;
+            const categoryName = player.currCatId
+              ? categoryMap.get(player.currCatId) || player.currCatId
+              : '-';
+            cell.innerHTML = `
+              <div class="player-name">${player.name}</div>
+              <div class="player-score">${player.score}</div>
+              <div class="player-category">${categoryName}</div>
+            `.trim();
             used.add(pid);
           }
         }
