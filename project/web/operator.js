@@ -54,12 +54,20 @@ async function renderPlayers() {
   const manifest = await loadManifest();
   const catMap = {};
   manifest.categories.forEach(c => { catMap[c.id] = c.name; });
+  const cellCounts = new Map();
+  if (state.grid && Array.isArray(state.grid.cells)) {
+    state.grid.cells.forEach(id => {
+      if (!id) return;
+      cellCounts.set(id, (cellCounts.get(id) || 0) + 1);
+    });
+  }
   state.players.forEach(p => {
     const div = document.createElement('div');
     div.className = 'player-row';
     const orig = p.origCatId ? catMap[p.origCatId] || p.origCatId : '-';
     const curr = p.currCatId ? catMap[p.currCatId] || p.currCatId : '-';
-    div.innerHTML = `\n      <input value="${p.name}" data-id="${p.id}" class="p-name">\n      <span>Score: ${p.score}</span>\n      <span>Orig: ${orig}</span>\n      <span>Current: ${curr}</span>\n      <label><input type="checkbox" class="p-elim" data-id="${p.id}" ${p.eliminated? 'checked':''}> Eliminated</label>\n      <button class="p-reset" data-id="${p.id}">Reset Score</button>\n      <button class="p-remove" data-id="${p.id}">Remove</button>`;
+    const cells = cellCounts.has(p.id) ? cellCounts.get(p.id) : (p.cells ?? 0);
+    div.innerHTML = `\n      <input value="${p.name}" data-id="${p.id}" class="p-name">\n      <span>Cells: ${cells}</span>\n      <span>Orig: ${orig}</span>\n      <span>Current: ${curr}</span>\n      <label><input type="checkbox" class="p-elim" data-id="${p.id}" ${p.eliminated? 'checked':''}> Eliminated</label>\n      <button class="p-reset" data-id="${p.id}">Reset Cells</button>\n      <button class="p-remove" data-id="${p.id}">Remove</button>`;
     list.appendChild(div);
   });
 }
@@ -67,7 +75,7 @@ async function renderPlayers() {
 document.getElementById('add-player').addEventListener('click', () => {
   const name = prompt('Player name?');
   if (!name) return;
-  state.players.push({ id: crypto.randomUUID(), name, score: 0, eliminated: false, origCatId: null, currCatId: null });
+  state.players.push({ id: crypto.randomUUID(), name, cells: 1, eliminated: false, origCatId: null, currCatId: null });
   ensureGrid();
   saveState(state);
   renderPlayers();
@@ -92,9 +100,13 @@ document.getElementById('player-list').addEventListener('input', e => {
 document.getElementById('player-list').addEventListener('click', e => {
   if (e.target.classList.contains('p-reset')) {
     const p = state.players.find(p => p.id === e.target.dataset.id);
-    p.score = 0;
-    saveState(state);
-    renderPlayers();
+    if (p) {
+      p.cells = 1;
+      ensureGrid();
+      saveState(state);
+      renderPlayers();
+      renderDuelSelectors();
+    }
   } else if (e.target.classList.contains('p-remove')) {
     if (confirm('Remove player?')) {
       state.players = state.players.filter(p => p.id !== e.target.dataset.id);
@@ -112,7 +124,7 @@ function ensurePlayersFromManifest(manifest) {
   manifest.categories.forEach(c => {
     if (!seen.has(c.player)) {
       seen.add(c.player);
-      state.players.push({ id: crypto.randomUUID(), name: c.player, score: 0, eliminated: false, origCatId: c.id, currCatId: c.id });
+      state.players.push({ id: crypto.randomUUID(), name: c.player, cells: 1, eliminated: false, origCatId: c.id, currCatId: c.id });
     }
   });
   saveState(state);
@@ -138,24 +150,43 @@ function assignCategoryInfoFromManifest(manifest) {
 
 function ensureGrid() {
   let changed = false;
-  // Ensure each player tracks how many cells they currently own
+  const gridCounts = new Map();
+  if (state.grid && Array.isArray(state.grid.cells)) {
+    state.grid.cells.forEach(id => {
+      if (!id) return;
+      gridCounts.set(id, (gridCounts.get(id) || 0) + 1);
+    });
+  }
+
   state.players.forEach(p => {
-    if (p.cells == null) {
-      const count = state.grid ? state.grid.cells.filter(id => id === p.id).length : 0;
-      p.cells = count || 1;
+    const actual = gridCounts.has(p.id) ? gridCounts.get(p.id) : undefined;
+    if (actual != null) {
+      if (p.cells !== actual) {
+        p.cells = actual;
+        changed = true;
+      }
+    } else if (p.cells == null) {
+      p.cells = 1;
+      changed = true;
+    } else if (p.cells < 0) {
+      p.cells = 0;
       changed = true;
     }
   });
 
   const total = state.players.reduce((sum, p) => sum + (p.cells || 0), 0);
 
-  // If an existing grid already matches the total cell count, keep it as-is
+  if (!total) {
+    state.grid = { rows: 0, cols: 0, cells: [] };
+    saveState(state);
+    return;
+  }
+
   if (state.grid && state.grid.cells.length === total) {
     if (changed) saveState(state);
     return;
   }
 
-  // Otherwise rebuild a near-square grid from scratch
   const cols = Math.ceil(Math.sqrt(total));
   const rows = Math.ceil(total / cols);
   const cells = [];
@@ -189,8 +220,8 @@ document.getElementById('show-players-screen').addEventListener('click', () => {
 
 document.getElementById('show-random-player').addEventListener('click', () => {
   const alive = state.players.filter(p => !p.eliminated);
-  const zero = alive.filter(p => p.score === 0);
-  const pool = zero.length ? zero : alive;
+  const starters = alive.filter(p => (p.cells ?? 1) === 1);
+  const pool = starters.length ? starters : alive;
   if (!pool.length) {
     alert('No players available');
     return;
@@ -417,8 +448,6 @@ function timeout() {
   state.clock.runningSide = null;
   state.scene = 'result';
   const winId = winner === 'left' ? state.leftPlayerId : state.rightPlayerId;
-  const p = state.players.find(x=>x.id===winId);
-  if (p) p.score += 1;
   state.winnerId = winId;
   saveState(state);
   renderPlayers();
@@ -432,7 +461,6 @@ function declareWinner(side) {
   const loseId = side === 'left' ? state.rightPlayerId : state.leftPlayerId;
   const leftCat = state.players.find(x=>x.id===state.leftPlayerId)?.currCatId;
   const p = state.players.find(x=>x.id===winId);
-  if (p) p.score += 1;
   state.winnerId = winId;
   if (confirm('Eliminate loser?')) {
     const lp = state.players.find(x=>x.id===loseId); if(lp) lp.eliminated = true;

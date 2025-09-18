@@ -120,7 +120,7 @@ type Settings = {
 type Player = {
   id: string;
   name: string;
-  score: number;
+  cells: number;
   eliminated: boolean;
 };
 ```
@@ -223,7 +223,7 @@ Implement a clean control panel with three main areas:
 
 * Table/list with CRUD:
 
-  * Add player (auto-id UUIDv4), edit name, toggle eliminated, reset score.
+  * Add player (auto-id UUIDv4), edit name, toggle eliminated, reset cells.
   * Remove player (confirm).
 * Always persists changes & broadcasts.
 
@@ -245,7 +245,7 @@ Implement a clean control panel with three main areas:
   * **Correct (Left)** / **Correct (Right)** → triggers **SWITCH_TURN** (stop current side, start the other; used when opponent gives a correct answer).
   * **Reveal Answer** (sets `current.revealed = true`).
   * **Timeout (Force)** — triggers timeout on the currently running side.
-  * **Declare Winner (Left/Right)** — sets scene `result`, updates winner’s `score += 1`, optionally mark loser as eliminated (checkbox option).
+  * **Declare Winner (Left/Right)** — sets scene `result`, optionally transfer territory by eliminating the loser (checkbox option).
   * **Next Item** — moves back to `category_select` or `duel_ready` (your choice), keeps duelists or resets them per UX note in code.
   * **Reset Duel** — re-init duel clocks without changing players/item.
 
@@ -284,7 +284,7 @@ Implement a clean control panel with three main areas:
   * **category_select** — “Stand by”.
   * **duel_ready** — show the two players’ names large, category title.
   * **duel_live** — **big chess-clock** view: two large name panels with remaining times; central **image** (`current.src`) scaled to fit; answer hidden unless `current.revealed === true` or scene changed; a subtle running indicator on the active side.
-  * **result** — winner banner, (optional) score update indicator.
+  * **result** — winner banner, (optional) territory update indicator.
   * **pause** — overlay “Paused”.
 * Responsive, TV-friendly; avoid clutter. No controls.
 

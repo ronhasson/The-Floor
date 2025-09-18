@@ -81,6 +81,11 @@ function renderPlayers() {
   container.style.gap = '0';
   const used = new Set();
   const indexMap = new Map(state.players.map((p, i) => [p.id, i]));
+  const cellCounts = new Map();
+  grid.cells.forEach(pid => {
+    if (!pid) return;
+    cellCounts.set(pid, (cellCounts.get(pid) || 0) + 1);
+  });
   const categoryMap = manifest?.categories
     ? new Map(manifest.categories.map(c => [c.id, c.name]))
     : new Map();
@@ -101,9 +106,12 @@ function renderPlayers() {
             const categoryName = player.currCatId
               ? categoryMap.get(player.currCatId) || player.currCatId
               : '-';
+            const cellsOwned = cellCounts.has(pid)
+              ? cellCounts.get(pid)
+              : (player.cells ?? 0);
             cell.innerHTML = `
               <div class="player-name">${player.name}</div>
-              <div class="player-score">${player.score}</div>
+              <div class="player-cells">${cellsOwned}</div>
               <div class="player-category">${categoryName}</div>
             `.trim();
             used.add(pid);
