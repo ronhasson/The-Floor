@@ -62,13 +62,62 @@ async function renderPlayers() {
     });
   }
   state.players.forEach(p => {
-    const div = document.createElement('div');
-    div.className = 'player-row';
-    const orig = p.origCatId ? catMap[p.origCatId] || p.origCatId : '-';
-    const curr = p.currCatId ? catMap[p.currCatId] || p.currCatId : '-';
+    const row = document.createElement('tr');
+    row.className = 'player-row';
+
+    const nameCell = document.createElement('td');
+    nameCell.className = 'player-name';
+    const nameInput = document.createElement('input');
+    nameInput.className = 'p-name';
+    nameInput.dataset.id = p.id;
+    nameInput.value = p.name;
+    nameCell.appendChild(nameInput);
+    row.appendChild(nameCell);
+
+    const cellsCell = document.createElement('td');
+    cellsCell.className = 'player-cells';
     const cells = cellCounts.has(p.id) ? cellCounts.get(p.id) : (p.cells ?? 0);
-    div.innerHTML = `\n      <input value="${p.name}" data-id="${p.id}" class="p-name">\n      <span>Cells: ${cells}</span>\n      <span>Orig: ${orig}</span>\n      <span>Current: ${curr}</span>\n      <label><input type="checkbox" class="p-elim" data-id="${p.id}" ${p.eliminated? 'checked':''}> Eliminated</label>\n      <button class="p-reset" data-id="${p.id}">Reset Cells</button>\n      <button class="p-remove" data-id="${p.id}">Remove</button>`;
-    list.appendChild(div);
+    cellsCell.textContent = cells;
+    row.appendChild(cellsCell);
+
+    const origCell = document.createElement('td');
+    const orig = p.origCatId ? catMap[p.origCatId] || p.origCatId : '-';
+    origCell.textContent = orig;
+    row.appendChild(origCell);
+
+    const currCell = document.createElement('td');
+    const curr = p.currCatId ? catMap[p.currCatId] || p.currCatId : '-';
+    currCell.textContent = curr;
+    row.appendChild(currCell);
+
+    const elimCell = document.createElement('td');
+    elimCell.className = 'player-eliminated';
+    const elimLabel = document.createElement('label');
+    const elimInput = document.createElement('input');
+    elimInput.type = 'checkbox';
+    elimInput.className = 'p-elim';
+    elimInput.dataset.id = p.id;
+    elimInput.checked = !!p.eliminated;
+    elimLabel.appendChild(elimInput);
+    elimLabel.append(' Eliminated');
+    elimCell.appendChild(elimLabel);
+    row.appendChild(elimCell);
+
+    const actionsCell = document.createElement('td');
+    actionsCell.className = 'player-actions';
+    const resetButton = document.createElement('button');
+    resetButton.className = 'p-reset';
+    resetButton.dataset.id = p.id;
+    resetButton.textContent = 'Reset Cells';
+    const removeButton = document.createElement('button');
+    removeButton.className = 'p-remove';
+    removeButton.dataset.id = p.id;
+    removeButton.textContent = 'Remove';
+    actionsCell.appendChild(resetButton);
+    actionsCell.appendChild(removeButton);
+    row.appendChild(actionsCell);
+
+    list.appendChild(row);
   });
 }
 
