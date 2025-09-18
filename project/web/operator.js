@@ -327,8 +327,17 @@ async function suggestCategoryForRightPlayer() {
 
 function renderAnswer() {
   const el = document.getElementById('current-answer');
-  if (!el) return;
-  el.textContent = state.current?.answer || '';
+  if (el) {
+    if (state.current?.standBy) {
+      el.textContent = state.current.message || '';
+    } else {
+      el.textContent = state.current?.answer || '';
+    }
+  }
+  const nextBtn = document.getElementById('next-item');
+  if (nextBtn) {
+    nextBtn.disabled = !!state.current?.standBy;
+  }
 }
 
 async function populateCategories(manifest) {
@@ -384,6 +393,16 @@ async function ensureCurrentItem() {
   if (itemSel) itemSel.value = item.index;
   state.scene = 'duel_ready';
   renderAnswer();
+}
+function setStandbyState(message = 'Stand by') {
+  state.current = { standBy: true, message, revealed: true, answer: '' };
+  state.scene = 'duel_live';
+  state.penaltyUntil = null;
+  state.correctUntil = null;
+  state.winnerId = null;
+  if (state.clock) {
+    state.clock.runningSide = null;
+  }
 }
 
 // Clock and duel control -----------------------------------------------
@@ -450,21 +469,24 @@ function pauseToggle() {
 }
 
 async function advanceItem() {
-  if (!state.current) return;
+  if (!state.current || state.current.standBy) return;
   const manifest = await loadManifest();
   const cat = manifest.categories.find(c=>c.id===state.current.categoryId);
-  if (!cat) { state.current = undefined; state.scene = 'category_select'; return; }
+  const itemSel = document.getElementById('item');
+  if (!cat) {
+    if (itemSel) itemSel.value = '';
+    setStandbyState();
+    renderAnswer();
+    return;
+  }
   const nextIndex = state.current.itemIndex + 1;
   const item = cat.items.find(i=>i.index===nextIndex);
   if (item) {
     state.current = { categoryId: cat.id, itemIndex: item.index, src: item.src, answer: item.answer, revealed:false };
-    const itemSel = document.getElementById('item');
     if (itemSel) itemSel.value = item.index;
   } else {
-    state.current = undefined;
-    state.scene = 'category_select';
-    const itemSel = document.getElementById('item');
     if (itemSel) itemSel.value = '';
+    setStandbyState();
   }
   renderAnswer();
 }
@@ -473,6 +495,11 @@ async function switchTurn(side) {
   if (state.clock.runningSide !== side) return;
   applyElapsed();
   await advanceItem();
+  if (state.current?.standBy) {
+    state.clock.runningSide = null;
+    saveState(state);
+    return;
+  }
   state.clock.runningSide = side === 'left' ? 'right' : 'left';
   state.clock.lastSwitchTs = Date.now();
   saveState(state);
@@ -527,6 +554,7 @@ function reveal() {
 }
 
 async function nextItem() {
+  if (state.current?.standBy) return;
   state.penaltyUntil = null;
   state.correctUntil = null;
   await advanceItem();

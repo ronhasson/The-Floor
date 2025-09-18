@@ -23,52 +23,92 @@ function render() {
     const name = p ? p.name : '';
     root.innerHTML = `<h1>${name}</h1>`;
   } else if (scene === 'category_select') {
-    root.innerHTML = '<h1>Stand by</h1>';
+    if (shouldRenderStandbyInDuel()) {
+      renderDuelScene(scene);
+    } else {
+      root.innerHTML = '<h1>Stand by</h1>';
+    }
   } else if (scene === 'duel_ready') {
     const left = state.players.find(p=>p.id===state.leftPlayerId)?.name || 'Left';
     const right = state.players.find(p=>p.id===state.rightPlayerId)?.name || 'Right';
     const cat = manifest.categories.find(c=>c.id===state.current.categoryId)?.name || '';
     root.innerHTML = `<h2>${cat}</h2><div class="ready"><span>${left}</span> vs <span>${right}</span></div>`;
-  } else if (scene === 'duel_live' || scene === 'pause') {
-    const left = state.players.find(p=>p.id===state.leftPlayerId)?.name || 'Left';
-    const right = state.players.find(p=>p.id===state.rightPlayerId)?.name || 'Right';
-    let imgSrc = '';
-    if (state.current?.src) {
-      imgSrc = state.current.src;
-      if (imgSrc.startsWith('/')) {
-        imgSrc = '..' + imgSrc;
-      }
-      imgSrc = encodeURI(imgSrc);
-    }
-    const img = state.current?.src ? `<img src="${imgSrc}" class="item">` : '';
-    const ans = state.current?.revealed ? `<div class="answer">${state.current.answer}</div>` : '';
-    const penalty = state.penaltyUntil && Date.now() < state.penaltyUntil;
-    const correct = state.correctUntil && Date.now() < state.correctUntil;
-    const leftClass = `clock left ${state.clock.runningSide==='left'?'active':''} ${penalty && state.clock.runningSide==='left'?'penalty':''}`;
-    const rightClass = `clock right ${state.clock.runningSide==='right'?'active':''} ${penalty && state.clock.runningSide==='right'?'penalty':''}`;
-    root.innerHTML = `\n      <div class="${leftClass}">${left}<br>${Math.ceil(state.clock.leftRemainingMs/1000)}</div>\n      ${img}\n      <div class="${rightClass}">${right}<br>${Math.ceil(state.clock.rightRemainingMs/1000)}</div>\n      ${ans}`;
-    if (correct) {
-      const selector = state.clock.runningSide === 'left' ? '.clock.left' : '.clock.right';
-      root.querySelector(selector)?.classList.add('correct');
-    }
-    if (scene === 'pause') {
-      const overlay = document.createElement('div');
-      overlay.className = 'overlay';
-      overlay.textContent = 'Paused';
-      root.appendChild(overlay);
-    }
-  } else if (scene === 'result') {
-    const left = state.players.find(p=>p.id===state.leftPlayerId)?.name || 'Left';
-    const right = state.players.find(p=>p.id===state.rightPlayerId)?.name || 'Right';
-    let winner;
-    if (state.winnerId) {
-      winner = state.players.find(p => p.id === state.winnerId)?.name;
-    }
-    if (!winner) {
-      winner = state.clock.leftRemainingMs > state.clock.rightRemainingMs ? left : right;
-    }
-    root.innerHTML = `<h1>Winner: ${winner}</h1>`;
+  } else if (scene === 'duel_live' || scene === 'pause' || scene === 'result') {
+    renderDuelScene(scene);
   }
+
+}
+
+function shouldRenderStandbyInDuel() {
+  return state.scene === 'category_select' && state.current?.standBy;
+}
+
+function renderDuelScene(scene) {
+  const root = document.getElementById('display-root');
+  const leftName = state.players.find(p=>p.id===state.leftPlayerId)?.name || 'Left';
+  const rightName = state.players.find(p=>p.id===state.rightPlayerId)?.name || 'Right';
+  let centerContent = '';
+  if (state.current?.standBy) {
+    const message = state.current.message || 'Stand by';
+    centerContent = `<div class='standby-message'>${message}</div>`;
+  } else if (state.current?.src) {
+    let imgSrc = state.current.src;
+    if (imgSrc.startsWith('/')) {
+      imgSrc = '..' + imgSrc;
+    }
+    imgSrc = encodeURI(imgSrc);
+    centerContent = `<img src='${imgSrc}' class='item'>`;
+  }
+  const ans = state.current?.revealed && state.current?.answer
+    ? `<div class='answer'>${state.current.answer}</div>`
+    : '';
+  const penalty = state.penaltyUntil && Date.now() < state.penaltyUntil;
+  const correct = state.correctUntil && Date.now() < state.correctUntil;
+  const runningSide = state.clock?.runningSide;
+  const leftClasses = ['clock', 'left'];
+  const rightClasses = ['clock', 'right'];
+  if (runningSide === 'left') leftClasses.push('active');
+  if (runningSide === 'right') rightClasses.push('active');
+  if (penalty && runningSide === 'left') leftClasses.push('penalty');
+  if (penalty && runningSide === 'right') rightClasses.push('penalty');
+
+  let statusMessage = '';
+  if (scene === 'result' || state.winnerId) {
+    let winnerName;
+    if (state.winnerId) {
+      winnerName = state.players.find(p => p.id === state.winnerId)?.name;
+    }
+    if (!winnerName) {
+      winnerName = state.clock.leftRemainingMs > state.clock.rightRemainingMs ? leftName : rightName;
+    }
+    statusMessage = `Winner: ${winnerName}`;
+  }
+
+  const layout = [
+    statusMessage ? `<div class='status-banner'>${statusMessage}</div>` : '',
+    `<div class='${leftClasses.join(' ')}'>${leftName}<br>${formatSeconds(state.clock?.leftRemainingMs)}</div>`,
+    centerContent,
+    `<div class='${rightClasses.join(' ')}'>${rightName}<br>${formatSeconds(state.clock?.rightRemainingMs)}</div>`,
+    ans,
+  ].filter(Boolean).join('\n');
+  root.innerHTML = layout;
+
+  if (correct && (runningSide === 'left' || runningSide === 'right')) {
+    const selector = runningSide === 'left' ? '.clock.left' : '.clock.right';
+    root.querySelector(selector)?.classList.add('correct');
+  }
+  if (scene === 'pause') {
+    const overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    overlay.textContent = 'Paused';
+    root.appendChild(overlay);
+  }
+}
+
+function formatSeconds(ms) {
+  if (typeof ms !== 'number' || !isFinite(ms)) return '0';
+  const secs = Math.ceil(ms / 1000);
+  return Math.max(secs, 0).toString();
 }
 
 function renderPlayers() {
