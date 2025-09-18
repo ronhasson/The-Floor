@@ -74,12 +74,35 @@ select {
 .clock.correct {
   color: lime;
 }
+.status-banner {
+  position: fixed;
+  top: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.75rem 2.5rem;
+  border-radius: 999px;
+  font-size: 2.5rem;
+  font-weight: 600;
+  z-index: 10;
+}
 .item {
   width: -webkit-fill-available;
   object-fit: contain;
   max-width: 50%;
   max-height: calc(85vh - 16rem);
   margin-top: 10rem;
+}
+.standby-message {
+  margin: 10rem auto 0;
+  max-width: 60vw;
+  padding: 2.5rem 3rem;
+  border-radius: 1.5rem;
+  font-size: 3rem;
+  font-weight: 600;
+  line-height: 1.3;
+  position: fixed;
+  justify-self: center;
 }
 #display-root .answer {
   margin-top: 3rem;
