@@ -1,32 +1,7 @@
 {
   "version": 1,
-  "generatedAt": "2025-09-16T18:05:38.454113Z",
+  "generatedAt": "2025-09-21T09:46:46.128567Z",
   "categories": [
-    {
-      "id": "transportation",
-      "name": "Transportation",
-      "player": "Omri",
-      "items": [
-        {
-          "id": "transportation-1",
-          "index": 1,
-          "answer": "Bike",
-          "src": "/GameFolder/Omri - Transportation/1 - Bike.png"
-        },
-        {
-          "id": "transportation-2",
-          "index": 2,
-          "answer": "Bus",
-          "src": "/GameFolder/Omri - Transportation/2 - Bus.png"
-        },
-        {
-          "id": "transportation-3",
-          "index": 3,
-          "answer": "Car",
-          "src": "/GameFolder/Omri - Transportation/3 - Car.png"
-        }
-      ]
-    },
     {
       "id": "temp1",
       "name": "Temp1",
@@ -49,56 +24,6 @@
           "index": 3,
           "answer": "Blundstones",
           "src": "/GameFolder/Player1 - Temp1/3 - Blundstones.png"
-        }
-      ]
-    },
-    {
-      "id": "temp-10",
-      "name": "Temp 10",
-      "player": "Player10",
-      "items": [
-        {
-          "id": "temp-10-1",
-          "index": 1,
-          "answer": "Nike",
-          "src": "/GameFolder/Player10 - Temp 10/1 - Nike.png"
-        },
-        {
-          "id": "temp-10-2",
-          "index": 2,
-          "answer": "Addidas",
-          "src": "/GameFolder/Player10 - Temp 10/2 - Addidas.png"
-        },
-        {
-          "id": "temp-10-3",
-          "index": 3,
-          "answer": "Blundstones",
-          "src": "/GameFolder/Player10 - Temp 10/3 - Blundstones.png"
-        }
-      ]
-    },
-    {
-      "id": "temp11",
-      "name": "Temp11",
-      "player": "Player11",
-      "items": [
-        {
-          "id": "temp11-1",
-          "index": 1,
-          "answer": "Nike",
-          "src": "/GameFolder/Player11 - Temp11/1 - Nike.png"
-        },
-        {
-          "id": "temp11-2",
-          "index": 2,
-          "answer": "Addidas",
-          "src": "/GameFolder/Player11 - Temp11/2 - Addidas.png"
-        },
-        {
-          "id": "temp11-3",
-          "index": 3,
-          "answer": "Blundstones",
-          "src": "/GameFolder/Player11 - Temp11/3 - Blundstones.png"
         }
       ]
     },
@@ -253,102 +178,443 @@
       ]
     },
     {
-      "id": "temp-8",
-      "name": "Temp 8",
-      "player": "Player8",
+      "id": "מדע-בדיוני",
+      "name": "מדע בדיוני",
+      "player": "אדמירל אדמה",
       "items": [
         {
-          "id": "temp-8-1",
+          "id": "מדע-בדיוני-1",
           "index": 1,
-          "answer": "Nike",
-          "src": "/GameFolder/Player8 - Temp 8/1 - Nike.png"
+          "answer": "טולקין",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/1 - טולקין.JPG"
         },
         {
-          "id": "temp-8-2",
+          "id": "מדע-בדיוני-10",
+          "index": 10,
+          "answer": "אנטרפייז",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/10 - אנטרפייז.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-11",
+          "index": 11,
+          "answer": "כיי קיי רולינג",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/11 - כיי קיי רולינג.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-12",
+          "index": 12,
+          "answer": "לוקי",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/12 - לוקי.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-13",
+          "index": 13,
+          "answer": "מארוול",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/13 - מארוול.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-14",
+          "index": 14,
+          "answer": "Father",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/14 - Father.jpg"
+        },
+        {
+          "id": "מדע-בדיוני-15",
+          "index": 15,
+          "answer": "הנסיכה ליאה",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/15 - הנסיכה ליאה.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-16",
+          "index": 16,
+          "answer": "יודה",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/16 - יודה.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-17",
+          "index": 17,
+          "answer": "שליחות קטלנית",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/17 - שליחות קטלנית.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-18",
+          "index": 18,
+          "answer": "בילבו בגינס",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/18 - בילבו בגינס.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-19",
+          "index": 19,
+          "answer": "קנטאור",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/19 - קנטאור.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-2",
           "index": 2,
-          "answer": "Addidas",
-          "src": "/GameFolder/Player8 - Temp 8/2 - Addidas.png"
+          "answer": "מסע בין כוכבים",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/2 - מסע בין כוכבים.JPG"
         },
         {
-          "id": "temp-8-3",
+          "id": "מדע-בדיוני-20",
+          "index": 20,
+          "answer": "הארי פוטר ואבן החכמים",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/20 - הארי פוטר ואבן החכמים.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-3",
           "index": 3,
-          "answer": "Blundstones",
-          "src": "/GameFolder/Player8 - Temp 8/3 - Blundstones.png"
+          "answer": "דמבלדור",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/3 - דמבלדור.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-4",
+          "index": 4,
+          "answer": "גורג לוקאס",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/4 - גורג לוקאס.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-5",
+          "index": 5,
+          "answer": "קריפטון",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/5 - קריפטון.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-6",
+          "index": 6,
+          "answer": "אי טי",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/6 - אי טי.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-7",
+          "index": 7,
+          "answer": "גורג מרטין",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/7 - גורג מרטין.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-8",
+          "index": 8,
+          "answer": "ארבעים ושתיים",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/8 - ארבעים ושתיים.JPG"
+        },
+        {
+          "id": "מדע-בדיוני-9",
+          "index": 9,
+          "answer": "דאגלס אדמאמס",
+          "src": "/GameFolder/אדמירל אדמה - מדע בדיוני/9 - דאגלס אדמאמס.JPG"
         }
       ]
     },
     {
-      "id": "temp-9",
-      "name": "Temp 9",
-      "player": "Player9",
+      "id": "רוק-ישן",
+      "name": "רוק ישן",
+      "player": "אריאל",
       "items": [
         {
-          "id": "temp-9-1",
+          "id": "רוק-ישן-1",
           "index": 1,
-          "answer": "Nike",
-          "src": "/GameFolder/Player9 - Temp 9/1 - Nike.png"
+          "answer": "החיפושיות",
+          "src": "/GameFolder/אריאל - רוק ישן/1 - החיפושיות.webp"
         },
         {
-          "id": "temp-9-2",
+          "id": "רוק-ישן-10",
+          "index": 10,
+          "answer": "Blondie",
+          "src": "/GameFolder/אריאל - רוק ישן/10 - Blondie.webp"
+        },
+        {
+          "id": "רוק-ישן-11",
+          "index": 11,
+          "answer": "Dire Straits",
+          "src": "/GameFolder/אריאל - רוק ישן/11 - Dire Straits.jpg"
+        },
+        {
+          "id": "רוק-ישן-12",
+          "index": 12,
+          "answer": "The Mamas and Papas",
+          "src": "/GameFolder/אריאל - רוק ישן/12 - The Mamas and Papas.webp"
+        },
+        {
+          "id": "רוק-ישן-13",
+          "index": 13,
+          "answer": "ABBA",
+          "src": "/GameFolder/אריאל - רוק ישן/13 - ABBA.png"
+        },
+        {
+          "id": "רוק-ישן-14",
+          "index": 14,
+          "answer": "Jefferson Airplane",
+          "src": "/GameFolder/אריאל - רוק ישן/14 - Jefferson Airplane.webp"
+        },
+        {
+          "id": "רוק-ישן-15",
+          "index": 15,
+          "answer": "Heart",
+          "src": "/GameFolder/אריאל - רוק ישן/15 - Heart.jpg"
+        },
+        {
+          "id": "רוק-ישן-16",
+          "index": 16,
+          "answer": "Genesis",
+          "src": "/GameFolder/אריאל - רוק ישן/16 - Genesis.webp"
+        },
+        {
+          "id": "רוק-ישן-17",
+          "index": 17,
+          "answer": "Carlos Santana",
+          "src": "/GameFolder/אריאל - רוק ישן/17 - Carlos Santana.jpg"
+        },
+        {
+          "id": "רוק-ישן-18",
+          "index": 18,
+          "answer": "Crosby Stills Nash and Young",
+          "src": "/GameFolder/אריאל - רוק ישן/18 - Crosby Stills Nash and Young.webp"
+        },
+        {
+          "id": "רוק-ישן-19",
+          "index": 19,
+          "answer": "Patti Smith",
+          "src": "/GameFolder/אריאל - רוק ישן/19 - Patti Smith.jpg"
+        },
+        {
+          "id": "רוק-ישן-2",
           "index": 2,
-          "answer": "Addidas",
-          "src": "/GameFolder/Player9 - Temp 9/2 - Addidas.png"
+          "answer": "the rolling stones",
+          "src": "/GameFolder/אריאל - רוק ישן/2 - the rolling stones.webp"
         },
         {
-          "id": "temp-9-3",
+          "id": "רוק-ישן-20",
+          "index": 20,
+          "answer": "Sex Pistols",
+          "src": "/GameFolder/אריאל - רוק ישן/20 - Sex Pistols.jpg"
+        },
+        {
+          "id": "רוק-ישן-3",
           "index": 3,
-          "answer": "Blundstones",
-          "src": "/GameFolder/Player9 - Temp 9/3 - Blundstones.png"
+          "answer": "Pink Floyd",
+          "src": "/GameFolder/אריאל - רוק ישן/3 - Pink Floyd.jpg"
+        },
+        {
+          "id": "רוק-ישן-4",
+          "index": 4,
+          "answer": "Jimi Hendrix",
+          "src": "/GameFolder/אריאל - רוק ישן/4 - Jimi Hendrix.jpg"
+        },
+        {
+          "id": "רוק-ישן-5",
+          "index": 5,
+          "answer": "The Beach Boys",
+          "src": "/GameFolder/אריאל - רוק ישן/5 - The Beach Boys.webp"
+        },
+        {
+          "id": "רוק-ישן-6",
+          "index": 6,
+          "answer": "The Doors",
+          "src": "/GameFolder/אריאל - רוק ישן/6 - The Doors.JPG"
+        },
+        {
+          "id": "רוק-ישן-7",
+          "index": 7,
+          "answer": "Fleetwood Mac",
+          "src": "/GameFolder/אריאל - רוק ישן/7 - Fleetwood Mac.webp"
+        },
+        {
+          "id": "רוק-ישן-8",
+          "index": 8,
+          "answer": "Black Sabbath",
+          "src": "/GameFolder/אריאל - רוק ישן/8 - Black Sabbath.webp"
+        },
+        {
+          "id": "רוק-ישן-9",
+          "index": 9,
+          "answer": "The Eagles",
+          "src": "/GameFolder/אריאל - רוק ישן/9 - The Eagles.webp"
         }
       ]
     },
     {
-      "id": "shoe-brands",
-      "name": "Shoe Brands",
-      "player": "Ron",
+      "id": "גאוגרפיה",
+      "name": "גאוגרפיה",
+      "player": "הילה",
       "items": [
         {
-          "id": "shoe-brands-1",
+          "id": "גאוגרפיה-1",
           "index": 1,
-          "answer": "Nike",
-          "src": "/GameFolder/Ron - Shoe Brands/1 - Nike.png"
+          "answer": "ניו יורק",
+          "src": "/GameFolder/הילה - גאוגרפיה/1 - ניו יורק.JPG"
         },
         {
-          "id": "shoe-brands-2",
+          "id": "גאוגרפיה-10",
+          "index": 10,
+          "answer": "סאו פאולו",
+          "src": "/GameFolder/הילה - גאוגרפיה/10 - סאו פאולו.JPG"
+        },
+        {
+          "id": "גאוגרפיה-11",
+          "index": 11,
+          "answer": "ניקוסיה",
+          "src": "/GameFolder/הילה - גאוגרפיה/11 - ניקוסיה.JPG"
+        },
+        {
+          "id": "גאוגרפיה-12",
+          "index": 12,
+          "answer": "הוותיקן",
+          "src": "/GameFolder/הילה - גאוגרפיה/12 - הוותיקן.JPG"
+        },
+        {
+          "id": "גאוגרפיה-13",
+          "index": 13,
+          "answer": "רוסיה",
+          "src": "/GameFolder/הילה - גאוגרפיה/13 - רוסיה.JPG"
+        },
+        {
+          "id": "גאוגרפיה-14",
+          "index": 14,
+          "answer": "הלסינקי",
+          "src": "/GameFolder/הילה - גאוגרפיה/14 - הלסינקי.JPG"
+        },
+        {
+          "id": "גאוגרפיה-15",
+          "index": 15,
+          "answer": "הוולגה",
+          "src": "/GameFolder/הילה - גאוגרפיה/15 - הוולגה.JPG"
+        },
+        {
+          "id": "גאוגרפיה-16",
+          "index": 16,
+          "answer": "גאווה באינדונזיה",
+          "src": "/GameFolder/הילה - גאוגרפיה/16 - גאווה באינדונזיה.JPG"
+        },
+        {
+          "id": "גאוגרפיה-17",
+          "index": 17,
+          "answer": "בודפשט",
+          "src": "/GameFolder/הילה - גאוגרפיה/17 - בודפשט.JPG"
+        },
+        {
+          "id": "גאוגרפיה-18",
+          "index": 18,
+          "answer": "טנזניה",
+          "src": "/GameFolder/הילה - גאוגרפיה/18 - טנזניה.JPG"
+        },
+        {
+          "id": "גאוגרפיה-19",
+          "index": 19,
+          "answer": "האמזונס",
+          "src": "/GameFolder/הילה - גאוגרפיה/19 - האמזונס.JPG"
+        },
+        {
+          "id": "גאוגרפיה-2",
           "index": 2,
-          "answer": "Addidas",
-          "src": "/GameFolder/Ron - Shoe Brands/2 - Addidas.png"
+          "answer": "פריז",
+          "src": "/GameFolder/הילה - גאוגרפיה/2 - פריז.JPG"
         },
         {
-          "id": "shoe-brands-3",
+          "id": "גאוגרפיה-20",
+          "index": 20,
+          "answer": "איתיופיה",
+          "src": "/GameFolder/הילה - גאוגרפיה/20 - איתיופיה.JPG"
+        },
+        {
+          "id": "גאוגרפיה-21",
+          "index": 21,
+          "answer": "טורקיה",
+          "src": "/GameFolder/הילה - גאוגרפיה/21 - טורקיה.JPG"
+        },
+        {
+          "id": "גאוגרפיה-22",
+          "index": 22,
+          "answer": "ברן",
+          "src": "/GameFolder/הילה - גאוגרפיה/22 - ברן.JPG"
+        },
+        {
+          "id": "גאוגרפיה-23",
+          "index": 23,
+          "answer": "הודו",
+          "src": "/GameFolder/הילה - גאוגרפיה/23 - הודו.JPG"
+        },
+        {
+          "id": "גאוגרפיה-24",
+          "index": 24,
+          "answer": "קנדה וארצות הברית",
+          "src": "/GameFolder/הילה - גאוגרפיה/24 - קנדה וארצות הברית.JPG"
+        },
+        {
+          "id": "גאוגרפיה-25",
+          "index": 25,
+          "answer": "יפן",
+          "src": "/GameFolder/הילה - גאוגרפיה/25 - יפן.JPG"
+        },
+        {
+          "id": "גאוגרפיה-26",
+          "index": 26,
+          "answer": "ים סוף",
+          "src": "/GameFolder/הילה - גאוגרפיה/26 - ים סוף.JPG"
+        },
+        {
+          "id": "גאוגרפיה-27",
+          "index": 27,
+          "answer": "מצר גיברלטר",
+          "src": "/GameFolder/הילה - גאוגרפיה/27 - מצר גיברלטר.JPG"
+        },
+        {
+          "id": "גאוגרפיה-28",
+          "index": 28,
+          "answer": "וזוב",
+          "src": "/GameFolder/הילה - גאוגרפיה/28 - וזוב.JPG"
+        },
+        {
+          "id": "גאוגרפיה-29",
+          "index": 29,
+          "answer": "ים המלח",
+          "src": "/GameFolder/הילה - גאוגרפיה/29 - ים המלח.JPG"
+        },
+        {
+          "id": "גאוגרפיה-3",
           "index": 3,
-          "answer": "Blundstones",
-          "src": "/GameFolder/Ron - Shoe Brands/3 - Blundstones.png"
-        }
-      ]
-    },
-    {
-      "id": "נעליים",
-      "name": "נעליים",
-      "player": "בועז",
-      "items": [
-        {
-          "id": "נעליים-1",
-          "index": 1,
-          "answer": "Nike",
-          "src": "/GameFolder/בועז - נעליים/1 - Nike.png"
+          "answer": "רוסיה",
+          "src": "/GameFolder/הילה - גאוגרפיה/3 - רוסיה.JPG"
         },
         {
-          "id": "נעליים-2",
-          "index": 2,
-          "answer": "Addidas",
-          "src": "/GameFolder/בועז - נעליים/2 - Addidas.png"
+          "id": "גאוגרפיה-30",
+          "index": 30,
+          "answer": "עשרים ושבע",
+          "src": "/GameFolder/הילה - גאוגרפיה/30 - עשרים ושבע.JPG"
         },
         {
-          "id": "נעליים-3",
-          "index": 3,
-          "answer": "Blundstones",
-          "src": "/GameFolder/בועז - נעליים/3 - Blundstones.png"
+          "id": "גאוגרפיה-4",
+          "index": 4,
+          "answer": "ריו דה זנרו",
+          "src": "/GameFolder/הילה - גאוגרפיה/4 - ריו דה זנרו.JPG"
+        },
+        {
+          "id": "גאוגרפיה-5",
+          "index": 5,
+          "answer": "אוסלו",
+          "src": "/GameFolder/הילה - גאוגרפיה/5 - אוסלו.JPG"
+        },
+        {
+          "id": "גאוגרפיה-6",
+          "index": 6,
+          "answer": "גרינלנד",
+          "src": "/GameFolder/הילה - גאוגרפיה/6 - גרינלנד.JPG"
+        },
+        {
+          "id": "גאוגרפיה-7",
+          "index": 7,
+          "answer": "פרטוריה או קייפטאון או בלומפונטיין",
+          "src": "/GameFolder/הילה - גאוגרפיה/7 - פרטוריה או קייפטאון או בלומפונטיין.JPG"
+        },
+        {
+          "id": "גאוגרפיה-8",
+          "index": 8,
+          "answer": "אוסקה",
+          "src": "/GameFolder/הילה - גאוגרפיה/8 - אוסקה.JPG"
+        },
+        {
+          "id": "גאוגרפיה-9",
+          "index": 9,
+          "answer": "מרוקו",
+          "src": "/GameFolder/הילה - גאוגרפיה/9 - מרוקו.JPG"
         }
       ]
     },
@@ -546,6 +812,139 @@
       ]
     },
     {
+      "id": "מנות-מפורסמות",
+      "name": "מנות מפורסמות",
+      "player": "ליאת ר",
+      "items": [
+        {
+          "id": "מנות-מפורסמות-1",
+          "index": 1,
+          "answer": "פיצה",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/1 - פיצה.webp"
+        },
+        {
+          "id": "מנות-מפורסמות-10",
+          "index": 10,
+          "answer": "גולאש",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/10 - גולאש.webp"
+        },
+        {
+          "id": "מנות-מפורסמות-11",
+          "index": 11,
+          "answer": "ראמן",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/11 - ראמן.webp"
+        },
+        {
+          "id": "מנות-מפורסמות-12",
+          "index": 12,
+          "answer": "קוסקוס",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/12 - קוסקוס.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-13",
+          "index": 13,
+          "answer": "רטטוי",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/13 - רטטוי.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-14",
+          "index": 14,
+          "answer": "קימצי",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/14 - קימצי.webp"
+        },
+        {
+          "id": "מנות-מפורסמות-15",
+          "index": 15,
+          "answer": "שניצל",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/15 - שניצל.jpeg"
+        },
+        {
+          "id": "מנות-מפורסמות-17",
+          "index": 17,
+          "answer": "פוקי",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/17 - פוקי.png"
+        },
+        {
+          "id": "מנות-מפורסמות-18",
+          "index": 18,
+          "answer": "בורשט חמיצה",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/18 - בורשט חמיצה.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-19",
+          "index": 19,
+          "answer": "קורדון בלו",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/19 - קורדון בלו.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-2",
+          "index": 2,
+          "answer": "המבורגר",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/2 - המבורגר.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-20",
+          "index": 20,
+          "answer": "חצפורי",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/20 - חצפורי.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-21",
+          "index": 21,
+          "answer": "אינגירה",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/21 - אינגירה.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-22",
+          "index": 22,
+          "answer": "גפילטע פיש",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/22 - גפילטע פיש.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-3",
+          "index": 3,
+          "answer": "סושי",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/3 - סושי.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-4",
+          "index": 4,
+          "answer": "שווארמה",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/4 - שווארמה.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-5",
+          "index": 5,
+          "answer": "ספגטי בולונז",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/5 - ספגטי בולונז.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-6",
+          "index": 6,
+          "answer": "שקשוקה",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/6 - שקשוקה.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-7",
+          "index": 7,
+          "answer": "פאייה",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/7 - פאייה.jpg"
+        },
+        {
+          "id": "מנות-מפורסמות-8",
+          "index": 8,
+          "answer": "פאד תאי",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/8 - פאד תאי.webp"
+        },
+        {
+          "id": "מנות-מפורסמות-9",
+          "index": 9,
+          "answer": "קרפ צרפתי",
+          "src": "/GameFolder/ליאת ר - מנות מפורסמות/9 - קרפ צרפתי.jpg"
+        }
+      ]
+    },
+    {
       "id": "זמרים-מזרחיים",
       "name": "זמרים מזרחיים",
       "player": "ליאת ש",
@@ -729,6 +1128,387 @@
           "index": 9,
           "answer": "ליטל גבאי",
           "src": "/GameFolder/ליאת ש - זמרים מזרחיים/9 - ליטל גבאי.jpg"
+        }
+      ]
+    },
+    {
+      "id": "היסטוריה",
+      "name": "היסטוריה",
+      "player": "מיכאל הרסגור",
+      "items": [
+        {
+          "id": "היסטוריה-1",
+          "index": 1,
+          "answer": "1492",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/1 - 1492.JPG"
+        },
+        {
+          "id": "היסטוריה-10",
+          "index": 10,
+          "answer": "1969",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/10 - 1969.JPG"
+        },
+        {
+          "id": "היסטוריה-11",
+          "index": 11,
+          "answer": "1963",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/11 - 1963.JPG"
+        },
+        {
+          "id": "היסטוריה-12",
+          "index": 12,
+          "answer": "1989",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/12 - 1989.JPG"
+        },
+        {
+          "id": "היסטוריה-13",
+          "index": 13,
+          "answer": "1979",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/13 - 1979.JPG"
+        },
+        {
+          "id": "היסטוריה-14",
+          "index": 14,
+          "answer": "2020",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/14 - 2020.JPG"
+        },
+        {
+          "id": "היסטוריה-15",
+          "index": 15,
+          "answer": "1993",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/15 - 1993.JPG"
+        },
+        {
+          "id": "היסטוריה-16",
+          "index": 16,
+          "answer": "70",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/16 - 70.JPG"
+        },
+        {
+          "id": "היסטוריה-17",
+          "index": 17,
+          "answer": "1991",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/17 - 1991.JPG"
+        },
+        {
+          "id": "היסטוריה-18",
+          "index": 18,
+          "answer": "1928",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/18 - 1928.JPG"
+        },
+        {
+          "id": "היסטוריה-19",
+          "index": 19,
+          "answer": "1869",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/19 - 1869.JPG"
+        },
+        {
+          "id": "היסטוריה-2",
+          "index": 2,
+          "answer": "1789",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/2 - 1789.JPG"
+        },
+        {
+          "id": "היסטוריה-20",
+          "index": 20,
+          "answer": "1967",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/20 - 1967.JPG"
+        },
+        {
+          "id": "היסטוריה-3",
+          "index": 3,
+          "answer": "1815",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/3 - 1815.JPG"
+        },
+        {
+          "id": "היסטוריה-4",
+          "index": 4,
+          "answer": "1989",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/4 - 1989.JPG"
+        },
+        {
+          "id": "היסטוריה-5",
+          "index": 5,
+          "answer": "1776",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/5 - 1776.JPG"
+        },
+        {
+          "id": "היסטוריה-6",
+          "index": 6,
+          "answer": "1917",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/6 - 1917.JPG"
+        },
+        {
+          "id": "היסטוריה-7",
+          "index": 7,
+          "answer": "1917",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/7 - 1917.JPG"
+        },
+        {
+          "id": "היסטוריה-8",
+          "index": 8,
+          "answer": "1945",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/8 - 1945.JPG"
+        },
+        {
+          "id": "היסטוריה-9",
+          "index": 9,
+          "answer": "1948",
+          "src": "/GameFolder/מיכאל הרסגור - היסטוריה/9 - 1948.JPG"
+        }
+      ]
+    },
+    {
+      "id": "גאווה",
+      "name": "גאווה",
+      "player": "ציונה",
+      "items": [
+        {
+          "id": "גאווה-1",
+          "index": 1,
+          "answer": "Freddie Mercury",
+          "src": "/GameFolder/ציונה - גאווה/1 - Freddie Mercury.jpg"
+        },
+        {
+          "id": "גאווה-10",
+          "index": 10,
+          "answer": "רצף הנטיות המיניות",
+          "src": "/GameFolder/ציונה - גאווה/10 - רצף הנטיות המיניות.JPG"
+        },
+        {
+          "id": "גאווה-11",
+          "index": 11,
+          "answer": "Northstar",
+          "src": "/GameFolder/ציונה - גאווה/11 - Northstar.JPG"
+        },
+        {
+          "id": "גאווה-12",
+          "index": 12,
+          "answer": "RuPaul",
+          "src": "/GameFolder/ציונה - גאווה/12 - RuPaul.webp"
+        },
+        {
+          "id": "גאווה-13",
+          "index": 13,
+          "answer": "טיוואן",
+          "src": "/GameFolder/ציונה - גאווה/13 - טיוואן.JPG"
+        },
+        {
+          "id": "גאווה-14",
+          "index": 14,
+          "answer": "Harvey Milk",
+          "src": "/GameFolder/ציונה - גאווה/14 - Harvey Milk.jpg"
+        },
+        {
+          "id": "גאווה-1",
+          "index": 1,
+          "answer": "15- Cher",
+          "src": "/GameFolder/ציונה - גאווה/15- Cher.webp"
+        },
+        {
+          "id": "גאווה-16",
+          "index": 16,
+          "answer": "ליאו ורדקר",
+          "src": "/GameFolder/ציונה - גאווה/16 - ליאו ורדקר.JPG"
+        },
+        {
+          "id": "גאווה-17",
+          "index": 17,
+          "answer": "הולנד",
+          "src": "/GameFolder/ציונה - גאווה/17 - הולנד.JPG"
+        },
+        {
+          "id": "גאווה-18",
+          "index": 18,
+          "answer": "2011",
+          "src": "/GameFolder/ציונה - גאווה/18 - 2011.JPG"
+        },
+        {
+          "id": "גאווה-19",
+          "index": 19,
+          "answer": "Bette Midler",
+          "src": "/GameFolder/ציונה - גאווה/19 - Bette Midler.jpg"
+        },
+        {
+          "id": "גאווה-2",
+          "index": 2,
+          "answer": "אלטון גון",
+          "src": "/GameFolder/ציונה - גאווה/2 - אלטון גון.JPG"
+        },
+        {
+          "id": "גאווה-20",
+          "index": 20,
+          "answer": "Boy George",
+          "src": "/GameFolder/ציונה - גאווה/20 - Boy George.jpeg"
+        },
+        {
+          "id": "גאווה-3",
+          "index": 3,
+          "answer": "1969",
+          "src": "/GameFolder/ציונה - גאווה/3 - 1969.JPG"
+        },
+        {
+          "id": "גאווה-4",
+          "index": 4,
+          "answer": "דרום אפריקה",
+          "src": "/GameFolder/ציונה - גאווה/4 - דרום אפריקה.JPG"
+        },
+        {
+          "id": "גאווה-5",
+          "index": 5,
+          "answer": "David Bowie",
+          "src": "/GameFolder/ציונה - גאווה/5 - David Bowie.webp"
+        },
+        {
+          "id": "גאווה-6",
+          "index": 6,
+          "answer": "Lady Gaga",
+          "src": "/GameFolder/ציונה - גאווה/6 - Lady Gaga.webp"
+        },
+        {
+          "id": "גאווה-7",
+          "index": 7,
+          "answer": "Kylie Minogue",
+          "src": "/GameFolder/ציונה - גאווה/7 - Kylie Minogue.jpg"
+        },
+        {
+          "id": "גאווה-8",
+          "index": 8,
+          "answer": "Young Mens Christian Association",
+          "src": "/GameFolder/ציונה - גאווה/8 - Young Mens Christian Association.JPG"
+        },
+        {
+          "id": "גאווה-9",
+          "index": 9,
+          "answer": "Marlene Dietrich",
+          "src": "/GameFolder/ציונה - גאווה/9 - Marlene Dietrich.jpg"
+        }
+      ]
+    },
+    {
+      "id": "פוליטיקאים-ישראליים",
+      "name": "פוליטיקאים ישראליים",
+      "player": "שולמית אלוני",
+      "items": [
+        {
+          "id": "פוליטיקאים-ישראליים-1",
+          "index": 1,
+          "answer": "דוד בן גוריון",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/1 - דוד בן גוריון.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-10",
+          "index": 10,
+          "answer": "סילבן שלום",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/10 - סילבן שלום.png"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-11",
+          "index": 11,
+          "answer": "אבא אבן",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/11 - אבא אבן.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-12",
+          "index": 12,
+          "answer": "עמיר פרץ",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/12 - עמיר פרץ.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-13",
+          "index": 13,
+          "answer": "אורי אבנרי",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/13 - אורי אבנרי.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-14",
+          "index": 14,
+          "answer": "משה ארבל",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/14 - משה ארבל.webp"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-15",
+          "index": 15,
+          "answer": "טומי לפיד",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/15 - טומי לפיד.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-16",
+          "index": 16,
+          "answer": "יגאל אלון",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/16 - יגאל אלון.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-17",
+          "index": 17,
+          "answer": "תמר גוזנסקי",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/17 - תמר גוזנסקי.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-18",
+          "index": 18,
+          "answer": "אורי אורבך",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/18 - אורי אורבך.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-19",
+          "index": 19,
+          "answer": "משה כחלון",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/19 - משה כחלון.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-2",
+          "index": 2,
+          "answer": "גולדה מאיר",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/2 - גולדה מאיר.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-20",
+          "index": 20,
+          "answer": "אמנון רובינשטיין",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/20 - אמנון רובינשטיין.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-3",
+          "index": 3,
+          "answer": "מנחם בגין",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/3 - מנחם בגין.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-4",
+          "index": 4,
+          "answer": "אריאל שרון",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/4 - אריאל שרון.webp"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-5",
+          "index": 5,
+          "answer": "יצחק רבין",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/5 - יצחק רבין.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-6",
+          "index": 6,
+          "answer": "אהוד אולמרט",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/6 - אהוד אולמרט.png"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-7",
+          "index": 7,
+          "answer": "שמעון פרס",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/7 - שמעון פרס.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-8",
+          "index": 8,
+          "answer": "שולמית אלוני",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/8 - שולמית אלוני.jpg"
+        },
+        {
+          "id": "פוליטיקאים-ישראליים-9",
+          "index": 9,
+          "answer": "גאולה כהן",
+          "src": "/GameFolder/שולמית אלוני - פוליטיקאים ישראליים/9 - גאולה כהן.jpg"
         }
       ]
     }
