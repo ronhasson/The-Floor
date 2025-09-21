@@ -198,6 +198,50 @@ select {
   font-weight: normal;
 }
 
+.random-player-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #111 0%, #181818 100%);
+  color: #fff3d0;
+  text-align: center;
+}
+
+.random-player-card {
+  padding: clamp(2.5rem, 6vw, 4rem) clamp(3rem, 8vw, 6rem);
+  border-radius: 1.5rem;
+  background: rgba(0, 0, 0, 0.65);
+  border: 2px solid #f1c76d;
+  box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.35);
+  transform: translateY(40px);
+  opacity: 0;
+  transition: transform 260ms ease, opacity 260ms ease;
+  min-width: min(88vw, 32rem);
+}
+
+.random-player-card.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.random-player-label {
+  font-size: clamp(1rem, 2vw, 1.75rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  margin-bottom: clamp(1.2rem, 3vw, 2rem);
+  color: #f9d88a;
+}
+
+.random-player-name {
+  font-size: clamp(3.25rem, 8vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #fff;
+  word-break: break-word;
+}
+
 #players .players-table-wrapper {
   overflow-x: auto;
   scrollbar-width: thin;

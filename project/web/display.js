@@ -19,9 +19,19 @@ function render() {
   if (scene === 'lobby') {
     root.innerHTML = '<h1>Arena Floor</h1>' + renderPlayers();
   } else if (scene === 'random_player') {
-    const p = state.players.find(p=>p.id===state.randomPlayerId);
-    const name = p ? p.name : '';
-    root.innerHTML = `<h1>${name}</h1>`;
+    const player = state.players.find(p=>p.id===state.randomPlayerId);
+    const name = player ? player.name : '';
+    root.innerHTML = `
+      <div class="random-player-screen">
+        <div class="random-player-card">
+          <div class="random-player-label">Next Challenger</div>
+          <div class="random-player-name">${name}</div>
+        </div>
+      </div>
+    `;
+    requestAnimationFrame(() => {
+      root.querySelector('.random-player-card')?.classList.add('is-visible');
+    });
   } else if (scene === 'category_select') {
     if (shouldRenderStandbyInDuel()) {
       renderDuelScene(scene);
