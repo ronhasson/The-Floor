@@ -19,9 +19,7 @@ function render() {
   if (scene === 'lobby') {
     root.innerHTML = '<h1>Arena Floor</h1>' + renderPlayers();
   } else if (scene === 'random_player') {
-    const p = state.players.find(p=>p.id===state.randomPlayerId);
-    const name = p ? p.name : '';
-    root.innerHTML = `<h1>${name}</h1>`;
+    renderRandomPlayerScene(root);
   } else if (scene === 'category_select') {
     if (shouldRenderStandbyInDuel()) {
       renderDuelScene(scene);
@@ -46,6 +44,38 @@ function render() {
     renderDuelScene(scene);
   }
 
+}
+
+function renderRandomPlayerScene(root) {
+  const player = state.players.find(p => p.id === state.randomPlayerId);
+  const name = player ? player.name : '';
+
+  const screen = document.createElement('div');
+  screen.className = 'random-player-screen';
+
+  const card = document.createElement('div');
+  card.className = 'random-player-card';
+
+  const label = document.createElement('div');
+  label.className = 'random-player-label';
+  label.textContent = 'Next Challenger';
+
+  const nameNode = document.createElement('div');
+  nameNode.className = 'random-player-name';
+  nameNode.textContent = name;
+
+  card.append(label, nameNode);
+  screen.appendChild(card);
+  root.appendChild(screen);
+
+  // Restart the reveal animation even if updates arrive in quick succession.
+  screen.classList.remove('is-visible');
+  card.classList.remove('is-visible');
+  card.getBoundingClientRect();
+  requestAnimationFrame(() => {
+    screen.classList.add('is-visible');
+    card.classList.add('is-visible');
+  });
 }
 
 function shouldRenderStandbyInDuel() {
