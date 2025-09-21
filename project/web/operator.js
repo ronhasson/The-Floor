@@ -577,6 +577,19 @@ function penaltySkip() {
   }, ms);
 }
 
+function handleCorrectAction() {
+  if (!state.clock?.runningSide || state.correctUntil) return;
+  const side = state.clock.runningSide;
+  const ms = settings.correctRevealMs || 1000;
+  if (state.current) state.current.revealed = true;
+  state.correctUntil = Date.now() + ms;
+  saveState(state);
+  setTimeout(async () => {
+    state.correctUntil = null;
+    await switchTurn(side);
+  }, ms);
+}
+
 function resetDuel() {
   if (!state.current) return;
   initClock(state.clock.totalMs || settings.defaultTotalMs);
@@ -589,18 +602,7 @@ document.getElementById('start-duel').addEventListener('click', startDuel);
 
 document.getElementById('pause-duel').addEventListener('click', pauseToggle);
 
-document.getElementById('correct').addEventListener('click', () => {
-  if (!state.clock.runningSide || state.correctUntil) return;
-  const side = state.clock.runningSide;
-  const ms = settings.correctRevealMs || 1000;
-  if (state.current) state.current.revealed = true;
-  state.correctUntil = Date.now() + ms;
-  saveState(state);
-  setTimeout(async () => {
-    state.correctUntil = null;
-    await switchTurn(side);
-  }, ms);
-});
+document.getElementById('correct').addEventListener('click', handleCorrectAction);
 
 document.getElementById('reveal').addEventListener('click', reveal);
 
@@ -613,6 +615,28 @@ document.getElementById('penalty-skip').addEventListener('click', penaltySkip);
 document.getElementById('next-item').addEventListener('click', nextItem);
 
 document.getElementById('reset-duel').addEventListener('click', resetDuel);
+
+document.addEventListener('keydown', e => {
+  if (e.defaultPrevented || e.repeat || e.ctrlKey || e.altKey || e.metaKey) return;
+  const active = document.activeElement;
+  const tag = active?.tagName;
+  const isTextInput = active && (
+    tag === 'INPUT' ||
+    tag === 'TEXTAREA' ||
+    tag === 'SELECT' ||
+    active.isContentEditable
+  );
+  if (isTextInput) return;
+  if (!(state.scene === 'duel_live' || state.scene === 'pause')) return;
+  const code = e.code;
+  if (code === 'KeyC') {
+    e.preventDefault();
+    handleCorrectAction();
+  } else if (code === 'KeyS') {
+    e.preventDefault();
+    penaltySkip();
+  }
+});
 
 function updateDisplayStatus() {
   const el = document.getElementById('display-status');
