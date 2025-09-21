@@ -37,6 +37,7 @@ export function migrateState(s) {
     });
   }
   if (s.winnerId === undefined) s.winnerId = null;
+  if (s.victory === undefined) s.victory = null;
   return s;
 }
 
@@ -60,6 +61,7 @@ export function freshState() {
     penaltyUntil: null,
     correctUntil: null,
     winnerId: null,
+    victory: null,
   };
 }
 
@@ -76,6 +78,9 @@ export function loadState() {
 
 export function saveState(state, options = {}) {
   const { broadcast = true } = options;
+  if (state.scene !== 'victory') {
+    state.victory = null;
+  }
   state.lastSavedAt = Date.now();
   localStorage.setItem(LS_STATE, JSON.stringify(state));
   if (broadcast) channel.postMessage(state);
