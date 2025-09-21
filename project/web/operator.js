@@ -17,6 +17,7 @@ let state = loadState();
 let settings = loadSettings();
 let displayWin = null;
 let displayConnected = false;
+const victoryButton = document.getElementById('show-victory');
 
 async function init() {
   if (state) {
@@ -39,12 +40,13 @@ async function init() {
   ensurePlayersFromManifest(manifest);
   assignCategoryInfoFromManifest(manifest);
   ensureGrid();
-  renderPlayers();
+  await renderPlayers();
   renderDuelSelectors();
   tickLoop();
   updateDisplayStatus();
   renderAnswer();
   suggestCategoryForRightPlayer();
+  updateVictoryButton();
 }
 
 // Player management ----------------------------------------------------
@@ -119,6 +121,52 @@ async function renderPlayers() {
 
     list.appendChild(row);
   });
+
+  updateVictoryButton();
+}
+
+function detectGridChampion() {
+  if (!state?.grid || !Array.isArray(state.grid.cells) || !state.grid.cells.length) {
+    return null;
+  }
+  const counts = new Map();
+  for (const pid of state.grid.cells) {
+    if (!pid) continue;
+    counts.set(pid, (counts.get(pid) || 0) + 1);
+    if (counts.size > 1) return null;
+  }
+  if (!counts.size) return null;
+  const [[pid, cellsOwned]] = counts.entries();
+  const championIndex = state.players.findIndex(p => p.id === pid);
+  if (championIndex === -1) return null;
+  const hasOtherHolders = state.players.some(p => {
+    if (!p || p.id === pid) return false;
+    const cells = typeof p.cells === 'number' ? p.cells : 0;
+    return cells > 0;
+  });
+  if (hasOtherHolders) return null;
+  const player = state.players[championIndex];
+  if (!player) return null;
+  return { player, championIndex, cellsOwned };
+}
+
+function updateVictoryButton() {
+  if (!victoryButton) return;
+  const champion = detectGridChampion();
+  if (champion) {
+    const { player } = champion;
+    const name = player?.name || 'Champion';
+    const isActive = state.scene === 'victory' && state.victory?.championId === player?.id;
+    victoryButton.disabled = false;
+    victoryButton.textContent = `${isActive ? 'Victory Screen Active' : 'Show Victory Screen'} — ${name}`;
+  } else if (state.scene === 'victory' && state.victory?.championId) {
+    const activeName = state.players.find(p => p.id === state.victory.championId)?.name || 'Champion';
+    victoryButton.disabled = true;
+    victoryButton.textContent = `Victory Screen Active — ${activeName}`;
+  } else {
+    victoryButton.disabled = true;
+    victoryButton.textContent = 'Show Victory Screen';
+  }
 }
 
 document.getElementById('add-player').addEventListener('click', () => {
@@ -265,6 +313,7 @@ function transferGridAreas(winnerId, loserId) {
 document.getElementById('show-players-screen').addEventListener('click', () => {
   state.scene = 'lobby';
   saveState(state);
+  updateVictoryButton();
 });
 
 document.getElementById('show-random-player').addEventListener('click', () => {
@@ -279,7 +328,20 @@ document.getElementById('show-random-player').addEventListener('click', () => {
   state.randomPlayerId = choice.id;
   state.scene = 'random_player';
   saveState(state);
+  updateVictoryButton();
 });
+
+if (victoryButton) {
+  victoryButton.addEventListener('click', () => {
+    const champion = detectGridChampion();
+    const championId = champion?.player?.id;
+    if (!champion || !championId) return;
+    state.scene = 'victory';
+    state.victory = { championId, cellsOwned: champion.cellsOwned };
+    saveState(state);
+    updateVictoryButton();
+  });
+}
 
 // Duel selectors -------------------------------------------------------
 function renderDuelSelectors() {
@@ -657,6 +719,7 @@ setInterval(() => {
     displayWin = null;
   }
   updateDisplayStatus();
+  updateVictoryButton();
 }, 1000);
 
 // State & settings -----------------------------------------------------

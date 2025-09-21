@@ -16,7 +16,14 @@ function render() {
   if (!state) { root.textContent = 'Waiting...'; return; }
   root.innerHTML = '';
   const scene = state.scene;
-  if (scene === 'lobby') {
+  if (scene === 'victory') {
+    const context = getVictoryContext();
+    if (context) {
+      renderVictoryScreen(root, context);
+    } else {
+      root.innerHTML = '<div class="victory-unavailable">Victory information unavailable</div>';
+    }
+  } else if (scene === 'lobby') {
     root.innerHTML = '<h1>Arena Floor</h1>' + renderPlayers();
   } else if (scene === 'random_player') {
     renderRandomPlayerScene(root);
@@ -201,6 +208,164 @@ function renderPlayers() {
     }
   }
   return container.outerHTML;
+}
+
+function detectGridChampion() {
+  if (!state?.grid || !Array.isArray(state.grid.cells) || !state.grid.cells.length) {
+    return null;
+  }
+  const counts = new Map();
+  for (const pid of state.grid.cells) {
+    if (!pid) continue;
+    counts.set(pid, (counts.get(pid) || 0) + 1);
+    if (counts.size > 1) return null;
+  }
+  if (!counts.size) return null;
+  const [[pid, cellsOwned]] = counts.entries();
+  const championIndex = state.players.findIndex(p => p.id === pid);
+  if (championIndex === -1) return null;
+  const hasOtherHolders = state.players.some(p => {
+    if (!p || p.id === pid) return false;
+    const cells = typeof p.cells === 'number' ? p.cells : 0;
+    return cells > 0;
+  });
+  if (hasOtherHolders) return null;
+  const player = state.players[championIndex];
+  if (!player) return null;
+  return { player, championIndex, cellsOwned };
+}
+
+function getVictoryContext() {
+  if (!state) return null;
+  if (state.victory?.championId) {
+    const championId = state.victory.championId;
+    const championIndex = state.players.findIndex(p => p.id === championId);
+    if (championIndex !== -1) {
+      const player = state.players[championIndex];
+      if (player) {
+        const cellsOwned = typeof state.victory.cellsOwned === 'number'
+          ? state.victory.cellsOwned
+          : countCellsForPlayer(championId);
+        return { player, championIndex, cellsOwned };
+      }
+    }
+  }
+  return detectGridChampion();
+}
+
+function countCellsForPlayer(playerId) {
+  if (!state?.grid || !Array.isArray(state.grid.cells)) return 0;
+  return state.grid.cells.reduce((total, pid) => total + (pid === playerId ? 1 : 0), 0);
+}
+
+function renderVictoryScreen(root, { player, championIndex, cellsOwned }) {
+  const baseColor = playerColor(championIndex);
+  const palette = buildVictoryPalette(baseColor);
+  const screen = document.createElement('div');
+  screen.className = 'victory-screen';
+  screen.style.setProperty('--victory-color', palette.base);
+  screen.style.setProperty('--victory-color-light', palette.light);
+  screen.style.setProperty('--victory-color-dark', palette.dark);
+  screen.style.setProperty('--victory-text-color', palette.text);
+
+  const backdrop = document.createElement('div');
+  backdrop.className = 'victory-backdrop';
+
+  const confetti = document.createElement('div');
+  confetti.className = 'confetti-container';
+  createConfettiPieces(confetti, palette);
+
+  const content = document.createElement('div');
+  content.className = 'victory-content';
+
+  const heading = document.createElement('div');
+  heading.className = 'victory-heading';
+  heading.textContent = 'Total Domination';
+
+  const name = document.createElement('div');
+  name.className = 'victory-name';
+  name.textContent = player?.name || 'Champion';
+
+  const subtitle = document.createElement('div');
+  subtitle.className = 'victory-subtitle';
+  subtitle.textContent = 'has conquered the entire floor';
+
+  const detail = document.createElement('div');
+  detail.className = 'victory-detail';
+  const totalCells = Number.isFinite(cellsOwned) ? cellsOwned : countCellsForPlayer(player?.id);
+  const safeCount = Number.isFinite(totalCells) ? totalCells : 0;
+  const tileWord = safeCount === 1 ? 'tile' : 'tiles';
+  detail.textContent = `Controls all ${safeCount} ${tileWord}!`;
+
+  content.append(heading, name, subtitle, detail);
+  screen.append(backdrop, confetti, content);
+  root.appendChild(screen);
+
+  // Trigger entrance animation.
+  screen.getBoundingClientRect();
+  requestAnimationFrame(() => {
+    screen.classList.add('is-visible');
+  });
+}
+
+function createConfettiPieces(container, palette) {
+  const colors = [palette.base, palette.light, palette.dark, '#ffffff'];
+  const count = 80;
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement('span');
+    piece.className = 'confetti-piece';
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.animationDelay = `${Math.random() * 2}s`;
+    piece.style.animationDuration = `${3.5 + Math.random() * 2.5}s`;
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.opacity = (0.6 + Math.random() * 0.4).toFixed(2);
+    piece.style.width = `${0.35 + Math.random() * 0.4}rem`;
+    piece.style.height = `${1 + Math.random() * 1.7}rem`;
+    piece.style.setProperty('--confetti-start', `${Math.random() * 360}deg`);
+    piece.style.setProperty('--confetti-end', `${Math.random() * 16 - 8}vw`);
+    piece.style.setProperty('--confetti-rotation', `${Math.random() * 720 - 360}deg`);
+    container.appendChild(piece);
+  }
+}
+
+function buildVictoryPalette(baseColor) {
+  const hsl = parseHslColor(baseColor);
+  if (!hsl) {
+    return {
+      base: baseColor,
+      light: baseColor,
+      dark: baseColor,
+      text: '#111111',
+    };
+  }
+  const light = adjustHsl(hsl, { dl: 8 });
+  const dark = adjustHsl(hsl, { dl: -18, ds: 5 });
+  const text = hsl.l > 60 ? '#151515' : '#f5f5f5';
+  return { base: baseColor, light, dark, text };
+}
+
+function parseHslColor(color) {
+  if (typeof color !== 'string') return null;
+  const match = color.match(/hsl\(\s*([\d.]+)\s*,\s*([\d.]+)%\s*,\s*([\d.]+)%\s*\)/i);
+  if (!match) return null;
+  return {
+    h: Number(match[1]),
+    s: Number(match[2]),
+    l: Number(match[3]),
+  };
+}
+
+function adjustHsl(base, deltas) {
+  const { dh = 0, ds = 0, dl = 0 } = deltas || {};
+  const h = (base.h + dh) % 360;
+  const s = clampValue(base.s + ds, 0, 100);
+  const l = clampValue(base.l + dl, 0, 100);
+  const hue = h < 0 ? h + 360 : h;
+  return `hsl(${hue}, ${s}%, ${l}%)`;
+}
+
+function clampValue(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 
 const PLAYER_COLORS = Array.from(
