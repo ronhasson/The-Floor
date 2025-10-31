@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2025-10-31T15:46:34.495512Z",
+  "generatedAt": "2025-10-31T15:50:04.933240Z",
   "categories": [
     {
       "id": "רוק-ישן",
@@ -1675,6 +1675,12 @@
           "src": "/GameFolder/ציונה - גאווה/13 - טיוואן.webp"
         },
         {
+          "id": "גאווה-14",
+          "index": 14,
+          "answer": "Harvey Milk",
+          "src": "/GameFolder/ציונה - גאווה/14 - Harvey Milk.webp"
+        },
+        {
           "id": "גאווה-15",
           "index": 15,
           "answer": "Cher",
@@ -1751,6 +1757,12 @@
           "index": 8,
           "answer": "Young Mens Christian Association",
           "src": "/GameFolder/ציונה - גאווה/8 - Young Mens Christian Association.webp"
+        },
+        {
+          "id": "גאווה-9",
+          "index": 9,
+          "answer": "Marlene Dietrich",
+          "src": "/GameFolder/ציונה - גאווה/9 - Marlene Dietrich.webp"
         }
       ]
     },
