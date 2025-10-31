@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2025-10-31T15:10:51.516764Z",
+  "generatedAt": "2025-10-31T15:18:41.960499Z",
   "categories": [
     {
       "id": "רוק-ישן",
@@ -1636,6 +1636,115 @@
           "index": 9,
           "answer": "אנה",
           "src": "/GameFolder/עמית - דיסני/9 - אנה.webp"
+        }
+      ]
+    },
+    {
+      "id": "גאווה",
+      "name": "גאווה",
+      "player": "ציונה",
+      "items": [
+        {
+          "id": "גאווה-10",
+          "index": 10,
+          "answer": "רצף הנטיות המיניות",
+          "src": "/GameFolder/ציונה - גאווה/10 - רצף הנטיות המיניות.webp"
+        },
+        {
+          "id": "גאווה-11",
+          "index": 11,
+          "answer": "Northstar",
+          "src": "/GameFolder/ציונה - גאווה/11 - Northstar.webp"
+        },
+        {
+          "id": "גאווה-12",
+          "index": 12,
+          "answer": "RuPaul",
+          "src": "/GameFolder/ציונה - גאווה/12 - RuPaul.webp"
+        },
+        {
+          "id": "גאווה-13",
+          "index": 13,
+          "answer": "טיוואן",
+          "src": "/GameFolder/ציונה - גאווה/13 - טיוואן.webp"
+        },
+        {
+          "id": "גאווה-1",
+          "index": 1,
+          "answer": "15- Cher",
+          "src": "/GameFolder/ציונה - גאווה/15- Cher.webp"
+        },
+        {
+          "id": "גאווה-16",
+          "index": 16,
+          "answer": "ליאו ורדקר",
+          "src": "/GameFolder/ציונה - גאווה/16 - ליאו ורדקר.webp"
+        },
+        {
+          "id": "גאווה-17",
+          "index": 17,
+          "answer": "הולנד",
+          "src": "/GameFolder/ציונה - גאווה/17 - הולנד.webp"
+        },
+        {
+          "id": "גאווה-18",
+          "index": 18,
+          "answer": "2011",
+          "src": "/GameFolder/ציונה - גאווה/18 - 2011.webp"
+        },
+        {
+          "id": "גאווה-19",
+          "index": 19,
+          "answer": "Bette Midler",
+          "src": "/GameFolder/ציונה - גאווה/19 - Bette Midler.webp"
+        },
+        {
+          "id": "גאווה-2",
+          "index": 2,
+          "answer": "אלטון גון",
+          "src": "/GameFolder/ציונה - גאווה/2 - אלטון גון.webp"
+        },
+        {
+          "id": "גאווה-20",
+          "index": 20,
+          "answer": "Boy George",
+          "src": "/GameFolder/ציונה - גאווה/20 - Boy George.webp"
+        },
+        {
+          "id": "גאווה-3",
+          "index": 3,
+          "answer": "1969",
+          "src": "/GameFolder/ציונה - גאווה/3 - 1969.webp"
+        },
+        {
+          "id": "גאווה-4",
+          "index": 4,
+          "answer": "דרום אפריקה",
+          "src": "/GameFolder/ציונה - גאווה/4 - דרום אפריקה.webp"
+        },
+        {
+          "id": "גאווה-5",
+          "index": 5,
+          "answer": "David Bowie",
+          "src": "/GameFolder/ציונה - גאווה/5 - David Bowie.webp"
+        },
+        {
+          "id": "גאווה-6",
+          "index": 6,
+          "answer": "Lady Gaga",
+          "src": "/GameFolder/ציונה - גאווה/6 - Lady Gaga.webp"
+        },
+        {
+          "id": "גאווה-7",
+          "index": 7,
+          "answer": "Kylie Minogue",
+          "src": "/GameFolder/ציונה - גאווה/7 - Kylie Minogue.webp"
+        },
+        {
+          "id": "גאווה-8",
+          "index": 8,
+          "answer": "Young Mens Christian Association",
+          "src": "/GameFolder/ציונה - גאווה/8 - Young Mens Christian Association.webp"
         }
       ]
     },
