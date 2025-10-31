@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2025-10-31T15:18:41.960499Z",
+  "generatedAt": "2025-10-31T15:46:34.495512Z",
   "categories": [
     {
       "id": "רוק-ישן",
@@ -1645,6 +1645,12 @@
       "player": "ציונה",
       "items": [
         {
+          "id": "גאווה-1",
+          "index": 1,
+          "answer": "Freddie Mercury",
+          "src": "/GameFolder/ציונה - גאווה/1 - Freddie Mercury.webp"
+        },
+        {
           "id": "גאווה-10",
           "index": 10,
           "answer": "רצף הנטיות המיניות",
@@ -1669,10 +1675,10 @@
           "src": "/GameFolder/ציונה - גאווה/13 - טיוואן.webp"
         },
         {
-          "id": "גאווה-1",
-          "index": 1,
-          "answer": "15- Cher",
-          "src": "/GameFolder/ציונה - גאווה/15- Cher.webp"
+          "id": "גאווה-15",
+          "index": 15,
+          "answer": "Cher",
+          "src": "/GameFolder/ציונה - גאווה/15 - Cher.webp"
         },
         {
           "id": "גאווה-16",
